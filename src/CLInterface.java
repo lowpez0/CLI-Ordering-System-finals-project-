@@ -26,7 +26,6 @@ public class CLInterface {
         switch(input) {
             case 1: viewItems();
         }
-
     }
 
     public void viewItems() {
@@ -36,8 +35,9 @@ public class CLInterface {
         2. MOTHERBOARDS         5. STORAGE            8. POWER SUPPLIES      11. MOUSE
         3. CASES                6. COOLERS            9. MONITORS            12. HEADSETS & AUDIO
         """);
+        System.out.println("INPUT: ");
+        int category = scanner.nextInt();
+
     }
-
-
 }
 
