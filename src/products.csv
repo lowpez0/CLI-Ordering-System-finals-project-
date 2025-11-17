@@ -1,0 +1,134 @@
+productName,category,specifications,reviews,price
+AMD Ryzen 9 7950X,CPU,"Socket: AM5, Cores: 16, Threads: 32, Base Clock: 4.5GHz, Max Boost: 5.7GHz, TDP: 170W","4.8/5 - Excellent for gaming and productivity",₱34,999
+Intel Core i9-14900K,CPU,"Socket: LGA1700, Cores: 24 (8P+16E), Threads: 32, Max Turbo: 6.0GHz, TDP: 125W","4.7/5 - Best gaming performance",₱32,500
+AMD Ryzen 7 7800X3D,CPU,"Socket: AM5, Cores: 8, Threads: 16, Clock: 4.2-5.0GHz, 3D V-Cache: 96MB, TDP: 120W","4.9/5 - Ultimate gaming CPU",₱24,999
+Intel Core i5-13600K,CPU,"Socket: LGA1700, Cores: 14 (6P+8E), Threads: 20, Max Turbo: 5.1GHz, TDP: 125W","4.6/5 - Great value for money",₱15,999
+AMD Ryzen 5 7600X,CPU,"Socket: AM5, Cores: 6, Threads: 12, Clock: 4.7-5.3GHz, TDP: 105W","4.5/5 - Excellent budget AM5 option",₱12,500
+Intel Core i7-14700K,CPU,"Socket: LGA1700, Cores: 20 (8P+12E), Threads: 28, Max Turbo: 5.6GHz, TDP: 125W","4.7/5 - Great all-rounder",₱22,800
+AMD Ryzen 9 7900X,CPU,"Socket: AM5, Cores: 12, Threads: 24, Clock: 4.7-5.6GHz, TDP: 170W","4.6/5 - Powerful multi-threading",₱27,999
+Intel Core i3-13100F,CPU,"Socket: LGA1700, Cores: 4, Threads: 8, Max Turbo: 4.5GHz, TDP: 58W","4.3/5 - Best budget gaming CPU",₱6,299
+AMD Ryzen 7 7700X,CPU,"Socket: AM5, Cores: 8, Threads: 16, Clock: 4.5-5.4GHz, TDP: 105W","4.5/5 - Solid 8-core performance",₱18,500
+Intel Core i5-13400F,CPU,"Socket: LGA1700, Cores: 10 (6P+4E), Threads: 16, Max Turbo: 4.6GHz, TDP: 65W","4.4/5 - Excellent budget choice",₱10,999
+AMD Ryzen 5 5600X,CPU,"Socket: AM4, Cores: 6, Threads: 12, Clock: 3.7-4.6GHz, TDP: 65W","4.6/5 - AM4 value king",₱9,999
+Intel Core i9-13900K,CPU,"Socket: LGA1700, Cores: 24 (8P+16E), Threads: 32, Max Turbo: 5.8GHz, TDP: 125W","4.7/5 - Previous gen flagship",₱28,999
+AMD Ryzen 9 5950X,CPU,"Socket: AM4, Cores: 16, Threads: 32, Clock: 3.4-4.9GHz, TDP: 105W","4.8/5 - AM4 workstation beast",₱25,999
+Intel Core i7-13700K,CPU,"Socket: LGA1700, Cores: 16 (8P+8E), Threads: 24, Max Turbo: 5.4GHz, TDP: 125W","4.6/5 - Previous gen i7",₱19,999
+AMD Ryzen 3 4100,CPU,"Socket: AM4, Cores: 4, Threads: 8, Clock: 3.8-4.0GHz, TDP: 65W","4.2/5 - Entry level budget CPU",₱4,299
+NVIDIA GeForce RTX 4090,Graphic Cards,"GPU: AD102, VRAM: 24GB GDDR6X, Boost Clock: 2520MHz, Power: 450W","4.9/5 - Ultimate gaming performance",₱112,999
+NVIDIA GeForce RTX 4080 Super,Graphic Cards,"GPU: AD103, VRAM: 16GB GDDR6X, Boost Clock: 2550MHz, Power: 320W","4.8/5 - Excellent 4K gaming",₱65,999
+AMD Radeon RX 7900 XTX,Graphic Cards,"GPU: Navi 31, VRAM: 24GB GDDR6, Boost Clock: 2500MHz, Power: 355W","4.7/5 - Great AMD flagship",₱58,999
+NVIDIA GeForce RTX 4070 Ti Super,Graphic Cards,"GPU: AD103, VRAM: 16GB GDDR6X, Boost Clock: 2610MHz, Power: 285W","4.6/5 - Solid 1440p performance",₱49,999
+AMD Radeon RX 7800 XT,Graphic Cards,"GPU: Navi 32, VRAM: 16GB GDDR6, Boost Clock: 2430MHz, Power: 263W","4.6/5 - Best value 1440p",₱32,999
+NVIDIA GeForce RTX 4070 Super,Graphic Cards,"GPU: AD104, VRAM: 12GB GDDR6X, Boost Clock: 2475MHz, Power: 220W","4.5/5 - Great 1440p card",₱38,999
+NVIDIA GeForce RTX 4060 Ti,Graphic Cards,"GPU: AD106, VRAM: 8GB GDDR6, Boost Clock: 2535MHz, Power: 160W","4.3/5 - Good 1080p gaming",₱26,999
+AMD Radeon RX 7700 XT,Graphic Cards,"GPU: Navi 32, VRAM: 12GB GDDR6, Boost Clock: 2544MHz, Power: 245W","4.4/5 - Competitive 1080p",₱28,500
+NVIDIA GeForce RTX 4060,Graphic Cards,"GPU: AD107, VRAM: 8GB GDDR6, Boost Clock: 2460MHz, Power: 115W","4.2/5 - Entry level 1080p",₱19,999
+AMD Radeon RX 7600 XT,Graphic Cards,"GPU: Navi 33, VRAM: 8GB GDDR6, Boost Clock: 2755MHz, Power: 115W","4.1/5 - Budget 1080p option",₱18,500
+NVIDIA GeForce RTX 3060 Ti,Graphic Cards,"GPU: GA104, VRAM: 8GB GDDR6, Boost Clock: 1665MHz, Power: 200W","4.4/5 - Last gen value",₱22,999
+AMD Radeon RX 6750 XT,Graphic Cards,"GPU: Navi 22, VRAM: 12GB GDDR6, Boost Clock: 2600MHz, Power: 250W","4.3/5 - Good previous gen",₱24,999
+NVIDIA GeForce RTX 3050,Graphic Cards,"GPU: GA106, VRAM: 8GB GDDR6, Boost Clock: 1777MHz, Power: 130W","4.0/5 - Basic gaming GPU",₱15,499
+AMD Radeon RX 6600,Graphic Cards,"GPU: Navi 23, VRAM: 8GB GDDR6, Boost Clock: 2491MHz, Power: 132W","4.2/5 - Budget gaming",₱13,999
+Intel Arc A750,Graphic Cards,"GPU: ACM-G10, VRAM: 8GB GDDR6, Boost Clock: 2050MHz, Power: 225W","4.1/5 - Good for content creation",₱16,500
+Corsair Vengeance RGB 32GB DDR5 6000MHz,Memory,"Capacity: 32GB (2x16GB), Type: DDR5, Speed: 6000MHz, Timing: CL36, RGB: Yes","4.7/5 - Reliable and fast",₱8,499
+G.Skill Trident Z5 RGB 64GB DDR5 6400MHz,Memory,"Capacity: 64GB (2x32GB), Type: DDR5, Speed: 6400MHz, Timing: CL32, RGB: Yes","4.8/5 - High capacity performance",₱18,999
+TeamGroup T-Force Delta RGB 16GB DDR5 5600MHz,Memory,"Capacity: 16GB (2x8GB), Type: DDR5, Speed: 5600MHz, Timing: CL36, RGB: Yes","4.5/5 - Great budget DDR5",₱5,999
+Kingston Fury Beast 32GB DDR4 3200MHz,Memory,"Capacity: 32GB (2x16GB), Type: DDR4, Speed: 3200MHz, Timing: CL16, RGB: No","4.6/5 - Best value DDR4",₱4,299
+Corsair Dominator Platinum 64GB DDR5 7200MHz,Memory,"Capacity: 64GB (2x32GB), Type: DDR5, Speed: 7200MHz, Timing: CL34, RGB: Yes","4.9/5 - Premium performance",₱24,999
+G.Skill Ripjaws V 16GB DDR4 3600MHz,Memory,"Capacity: 16GB (2x8GB), Type: DDR4, Speed: 3600MHz, Timing: CL18, RGB: No","4.4/5 - Solid DDR4 choice",₱3,299
+TeamGroup Xtreem ARGB 32GB DDR4 4000MHz,Memory,"Capacity: 32GB (2x16GB), Type: DDR4, Speed: 4000MHz, Timing: CL18, RGB: Yes","4.5/5 - Fast DDR4 with RGB",₱6,499
+ADATA XPG Lancer RGB 32GB DDR5 6000MHz,Memory,"Capacity: 32GB (2x16GB), Type: DDR5, Speed: 6000MHz, Timing: CL40, RGB: Yes","4.4/5 - Good mid-range DDR5",₱7,999
+Crucial Ballistix 16GB DDR4 3200MHz,Memory,"Capacity: 16GB (2x8GB), Type: DDR4, Speed: 3200MHz, Timing: CL16, RGB: No","4.3/5 - Reliable budget RAM",₱2,999
+Patriot Viper Steel 64GB DDR4 3200MHz,Memory,"Capacity: 64GB (2x32GB), Type: DDR4, Speed: 3200MHz, Timing: CL16, RGB: No","4.6/5 - High capacity DDR4",₱8,999
+OLOy Blade RGB 32GB DDR5 5600MHz,Memory,"Capacity: 32GB (2x16GB), Type: DDR5, Speed: 5600MHz, Timing: CL36, RGB: Yes","4.3/5 - Affordable DDR5",₱6,299
+Corsair Vengeance LPX 16GB DDR4 2666MHz,Memory,"Capacity: 16GB (2x8GB), Type: DDR4, Speed: 2666MHz, Timing: CL16, RGB: No","4.2/5 - Basic DDR4 RAM",₱2,499
+G.Skill Trident Z Neo 32GB DDR4 3600MHz,Memory,"Capacity: 32GB (2x16GB), Type: DDR4, Speed: 3600MHz, Timing: CL16, RGB: Yes","4.7/5 - AMD optimized",₱5,999
+TeamGroup Zeus 8GB DDR4 3200MHz,Memory,"Capacity: 8GB (1x8GB), Type: DDR4, Speed: 3200MHz, Timing: CL22, RGB: No","4.0/5 - Basic single stick",₱1,299
+Silicon Power XPOWER Zenith 16GB DDR5 6000MHz,Memory,"Capacity: 16GB (2x8GB), Type: DDR5, Speed: 6000MHz, Timing: CL40, RGB: No","4.2/5 - Budget DDR5 option",₱4,999
+Razer BlackWidow V4 Pro,keyboards,"Type: Mechanical, Switch: Razer Green, Backlight: RGB, Connectivity: Wired, Layout: Full-size","4.8/5 - Premium gaming keyboard",₱12,999
+Corsair K100 RGB,keyboards,"Type: Optical-Mechanical, Switch: OPX, Backlight: RGB, Connectivity: Wired, Layout: Full-size","4.7/5 - High-end Corsair",₱11,499
+Logitech G915 TKL,keyboards,"Type: Mechanical, Switch: GL Tactile, Backlight: RGB, Connectivity: Wireless, Layout: TKL","4.8/5 - Excellent wireless",₱9,999
+SteelSeries Apex Pro,keyboards,"Type: Mechanical, Switch: OmniPoint, Backlight: RGB, Connectivity: Wired, Layout: Full-size","4.7/5 - Adjustable actuation",₱8,999
+Keychron K8 Pro,keyboards,"Type: Mechanical, Switch: Gateron Brown, Backlight: RGB, Connectivity: Bluetooth/Wired, Layout: TKL","4.6/5 - Great for work/gaming",₱5,299
+HyperX Alloy Origins Core,keyboards,"Type: Mechanical, Switch: HyperX Red, Backlight: RGB, Connectivity: Wired, Layout: TKL","4.5/5 - Solid TKL option",₱4,999
+Razer Huntsman Mini,keyboards,"Type: Optical, Switch: Razer Red, Backlight: RGB, Connectivity: Wired, Layout: 60%","4.4/5 - Compact optical",₱5,499
+Ducky One 3,keyboards,"Type: Mechanical, Switch: Cherry MX Red, Backlight: RGB, Connectivity: Wired, Layout: Full-size","4.6/5 - Build quality excellent",₱6,299
+Glorious GMMK 2,keyboards,"Type: Mechanical, Switch: Glorious Fox, Backlight: RGB, Connectivity: Wired, Layout: 96%","4.3/5 - Good value compact",₱4,299
+Royal Kludge RK84,keyboards,"Type: Mechanical, Switch: Red Brown Blue, Backlight: RGB, Connectivity: Wireless/Wired, Layout: 75%","4.2/5 - Budget wireless",₱2,999
+Roccat Vulcan II Max,keyboards,"Type: Mechanical, Switch: Titan II, Backlight: RGB, Connectivity: Wired, Layout: Full-size","4.4/5 - Unique design",₱7,999
+ASUS ROG Strix Scope II 96,keyboards,"Type: Mechanical, Switch: ROG NX Snow, Backlight: RGB, Connectivity: Wired, Layout: 96%","4.5/5 - Gaming focused",₱6,999
+Cooler Master CK720,keyboards,"Type: Mechanical, Switch: Gateron Yellow, Backlight: RGB, Connectivity: Wired, Layout: 75%","4.3/5 - Hot-swappable",₱3,999
+Akko 3068B Plus,keyboards,"Type: Mechanical, Switch: Akko CS, Backlight: RGB, Connectivity: Wireless/Wired, Layout: 65%","4.4/5 - Great budget option",₱3,299
+Redragon K552 Kumara,keyboards,"Type: Mechanical, Switch: Outemu Blue, Backlight: RGB, Connectivity: Wired, Layout: TKL","4.1/5 - Ultra budget mechanical",₱1,799
+ASUS ROG Maximus Z790 Hero,motherboards,"Socket: LGA1700, Chipset: Z790, Form: ATX, Memory: DDR5 7800+, PCIe: 5.0","4.8/5 - Premium Intel board",₱29,999
+Gigabyte X670E AORUS Master,motherboards,"Socket: AM5, Chipset: X670E, Form: ATX, Memory: DDR5 6600+, PCIe: 5.0","4.7/5 - High-end AMD",₱26,999
+MSI MPG B650 Carbon WiFi,motherboards,"Socket: AM5, Chipset: B650, Form: ATX, Memory: DDR5 6400+, PCIe: 4.0","4.6/5 - Great AM5 value",₱15,999
+ASRock B760M Steel Legend,motherboards,"Socket: LGA1700, Chipset: B760, Form: Micro-ATX, Memory: DDR5 7200+, PCIe: 4.0","4.5/5 - Solid mATX Intel",₱10,499
+ASUS TUF Gaming B550-PLUS,motherboards,"Socket: AM4, Chipset: B550, Form: ATX, Memory: DDR4 4600+, PCIe: 4.0","4.6/5 - Reliable AM4",₱8,999
+Gigabyte Z790 AORUS Elite AX,motherboards,"Socket: LGA1700, Chipset: Z790, Form: ATX, Memory: DDR5 7600+, PCIe: 5.0","4.7/5 - Feature-rich Intel",₱18,999
+MSI MAG B660M Mortar WiFi,motherboards,"Socket: LGA1700, Chipset: B660, Form: Micro-ATX, Memory: DDR4 4800+, PCIe: 4.0","4.4/5 - Good budget Intel",₱9,499
+ASRock X670E PG Lightning,motherboards,"Socket: AM5, Chipset: X670E, Form: ATX, Memory: DDR5 6600+, PCIe: 5.0","4.5/5 - Affordable X670E",₱17,999
+ASUS ROG Strix B450-F Gaming II,motherboards,"Socket: AM4, Chipset: B450, Form: ATX, Memory: DDR4 4400+, PCIe: 3.0","4.3/5 - Budget AM4 gaming",₱6,999
+Gigabyte B550M DS3H,motherboards,"Socket: AM4, Chipset: B550, Form: Micro-ATX, Memory: DDR4 4733+, PCIe: 4.0","4.2/5 - Entry level AM4",₱5,299
+MSI PRO Z790-A WiFi,motherboards,"Socket: LGA1700, Chipset: Z790, Form: ATX, Memory: DDR5 7200+, PCIe: 5.0","4.6/5 - Professional Z790",₱16,499
+ASRock B450M-HDV R4.0,motherboards,"Socket: AM4, Chipset: B450, Form: Micro-ATX, Memory: DDR4 3200+, PCIe: 3.0","4.1/5 - Basic AM4 board",₱3,999
+Biostar B550GTQ,motherboards,"Socket: AM4, Chipset: B550, Form: Micro-ATX, Memory: DDR4 4666+, PCIe: 4.0","4.0/5 - Ultra budget B550",₱4,299
+ASUS Prime H610M-A D4,motherboards,"Socket: LGA1700, Chipset: H610, Form: Micro-ATX, Memory: DDR4 3200+, PCIe: 4.0","4.2/5 - Basic Intel board",₱5,999
+Colorful CVN B665M,motherboards,"Socket: LGA1700, Chipset: B665, Form: Micro-ATX, Memory: DDR4 3200+, PCIe: 4.0","4.1/5 - Budget alternative",₱4,799
+Samsung 980 Pro 2TB NVMe SSD,storage,"Capacity: 2TB, Type: NVMe PCIe 4.0, Read: 7000MB/s, Write: 5000MB/s, Endurance: 1200TBW","4.8/5 - Fast and reliable",₱9,999
+Western Digital Black SN850X 2TB,storage,"Capacity: 2TB, Type: NVMe PCIe 4.0, Read: 7300MB/s, Write: 6600MB/s, Endurance: 1200TBW","4.7/5 - Gaming optimized",₱8,999
+Crucial P5 Plus 1TB,storage,"Capacity: 1TB, Type: NVMe PCIe 4.0, Read: 6600MB/s, Write: 5000MB/s, Endurance: 600TBW","4.6/5 - Great value PCIe 4.0",₱4,299
+Seagate Barracuda 4TB HDD,storage,"Capacity: 4TB, Type: HDD 3.5", RPM: 5400, Cache: 256MB, Interface: SATA 6Gb/s","4.4/5 - Reliable bulk storage",₱5,299
+Kingston NV2 2TB,storage,"Capacity: 2TB, Type: NVMe PCIe 4.0, Read: 3500MB/s, Write: 2800MB/s, Endurance: 500TBW","4.3/5 - Budget NVMe",₱5,999
+Samsung 870 EVO 1TB SATA SSD,storage,"Capacity: 1TB, Type: SATA SSD, Read: 560MB/s, Write: 530MB/s, Endurance: 600TBW","4.5/5 - Reliable SATA SSD",₱4,999
+Sabrent Rocket 4 Plus 4TB,storage,"Capacity: 4TB, Type: NVMe PCIe 4.0, Read: 7100MB/s, Write: 6600MB/s, Endurance: 3000TBW","4.8/5 - High capacity speed",₱18,999
+WD Blue SN580 1TB,storage,"Capacity: 1TB, Type: NVMe PCIe 4.0, Read: 4150MB/s, Write: 4150MB/s, Endurance: 600TBW","4.4/5 - Good budget option",₱3,499
+TeamGroup MP34 2TB,storage,"Capacity: 2TB, Type: NVMe PCIe 3.0, Read: 3500MB/s, Write: 2900MB/s, Endurance: 1600TBW","4.3/5 - Value PCIe 3.0",₱5,299
+Seagate FireCuda 530 2TB,storage,"Capacity: 2TB, Type: NVMe PCIe 4.0, Read: 7300MB/s, Write: 6900MB/s, Endurance: 1275TBW","4.7/5 - High performance",₱11,999
+ADATA XPG SX8200 Pro 1TB,storage,"Capacity: 1TB, Type: NVMe PCIe 3.0, Read: 3500MB/s, Write: 3000MB/s, Endurance: 640TBW","4.4/5 - Popular budget NVMe",₱3,999
+Crucial BX500 960GB,storage,"Capacity: 960GB, Type: SATA SSD, Read: 540MB/s, Write: 500MB/s, Endurance: 360TBW","4.2/5 - Basic SATA SSD",₱2,999
+Toshiba P300 2TB,storage,"Capacity: 2TB, Type: HDD 3.5", RPM: 7200, Cache: 64MB, Interface: SATA 6Gb/s","4.3/5 - Reliable HDD",₱3,299
+Silicon Power A55 512GB,storage,"Capacity: 512GB, Type: SATA SSD, Read: 520MB/s, Write: 450MB/s, Endurance: 280TBW","4.1/5 - Entry level SSD",₱1,599
+Lexar NM710 1TB,storage,"Capacity: 1TB, Type: NVMe PCIe 4.0, Read: 5000MB/s, Write: 4500MB/s, Endurance: 400TBW","4.2/5 - Budget PCIe 4.0",₱3,299
+Corsair RM1000x Shift,Power Supplies,"Wattage: 1000W, Efficiency: 80 Plus Gold, Modular: Full, Connectors: PCIe 5.0, Warranty: 10 years","4.8/5 - Excellent PSU",₱9,999
+Seasonic Prime TX-1000,Power Supplies,"Wattage: 1000W, Efficiency: 80 Plus Titanium, Modular: Full, Connectors: PCIe 5.0, Warranty: 12 years","4.9/5 - Top tier quality",₱14,999
+Cooler Master MWE Gold 850 V2,Power Supplies,"Wattage: 850W, Efficiency: 80 Plus Gold, Modular: Full, Connectors: Standard, Warranty: 10 years","4.6/5 - Great value",₱6,499
+be quiet! Straight Power 11 750W,Power Supplies,"Wattage: 750W, Efficiency: 80 Plus Platinum, Modular: Full, Connectors: Standard, Warranty: 5 years","4.7/5 - Silent operation",₱7,999
+EVGA SuperNOVA 650 G6,Power Supplies,"Wattage: 650W, Efficiency: 80 Plus Gold, Modular: Full, Connectors: Standard, Warranty: 10 years","4.5/5 - Reliable mid-range",₱5,299
+Thermaltake Toughpower GF3 1350W,Power Supplies,"Wattage: 1350W, Efficiency: 80 Plus Gold, Modular: Full, Connectors: PCIe 5.0, Warranty: 10 years","4.7/5 - High wattage beast",₱12,999
+FSP Hydro G Pro 1000W,Power Supplies,"Wattage: 1000W, Efficiency: 80 Plus Gold, Modular: Full, Connectors: PCIe 5.0, Warranty: 10 years","4.6/5 - Underrated brand",₱8,499
+SilverStone Essential ET650-H,Power Supplies,"Wattage: 650W, Efficiency: 80 Plus Bronze, Modular: No, Connectors: Standard, Warranty: 3 years","4.2/5 - Budget option",₱3,299
+Gigabyte P850GM,Power Supplies,"Wattage: 850W, Efficiency: 80 Plus Gold, Modular: Full, Connectors: Standard, Warranty: 10 years","4.3/5 - Controversial but decent",₱5,999
+Deepcool PQ850M,Power Supplies,"Wattage: 850W, Efficiency: 80 Plus Gold, Modular: Full, Connectors: PCIe 5.0, Warranty: 10 years","4.4/5 - Good value",₱5,499
+Antec Earthwatts Gold Pro 750W,Power Supplies,"Wattage: 750W, Efficiency: 80 Plus Gold, Modular: Semi, Connectors: Standard, Warranty: 7 years","4.3/5 - Solid semi-modular",₱4,999
+Cooler Master V750 Gold V2,Power Supplies,"Wattage: 750W, Efficiency: 80 Plus Gold, Modular: Full, Connectors: Standard, Warranty: 10 years","4.5/5 - Compact design",₱6,299
+Seasonic S12III 500W,Power Supplies,"Wattage: 500W, Efficiency: 80 Plus Bronze, Modular: No, Connectors: Basic, Warranty: 3 years","4.1/5 - Basic build PSU",₱2,299
+Corsair CV550,Power Supplies,"Wattage: 550W, Efficiency: 80 Plus Bronze, Modular: No, Connectors: Basic, Warranty: 5 years","4.0/5 - Entry level",₱2,799
+Thermaltake Smart BX1 650W,Power Supplies,"Wattage: 650W, Efficiency: 80 Plus Bronze, Modular: No, Connectors: Standard, Warranty: 5 years","4.2/5 - Budget 650W",₱3,499
+Logitech G Pro X Superlight,mouse,"Sensor: HERO 25K, DPI: 25600, Buttons: 5, Weight: 63g, Connectivity: Wireless","4.8/5 - Ultimate gaming mouse",₱7,999
+Razer DeathAdder V3 Pro,mouse,"Sensor: Focus Pro 30K, DPI: 30000, Buttons: 5, Weight: 64g, Connectivity: Wireless","4.7/5 - Ergonomic wireless",₱6,999
+SteelSeries Rival 3,mouse,"Sensor: TrueMove Core, DPI: 8500, Buttons: 6, Weight: 77g, Connectivity: Wired","4.3/5 - Budget gaming",₱1,299
+Corsair Dark Core RGB Pro,mouse,"Sensor: PMW3392, DPI: 18000, Buttons: 8, Weight: 145g, Connectivity: Wireless/Wired","4.5/5 - Feature-rich",₱4,299
+Glorious Model O,mouse,"Sensor: BAMF, DPI: 19000, Buttons: 6, Weight: 67g, Connectivity: Wired","4.6/5 - Lightweight wired",₱3,499
+Razer Viper V2 Pro,mouse,"Sensor: Focus Pro 30K, DPI: 30000, Buttons: 5, Weight: 58g, Connectivity: Wireless","4.8/5 - Ultra-light wireless",₱7,499
+Logitech G502 X Plus,mouse,"Sensor: HERO 25K, DPI: 25600, Buttons: 13, Weight: 106g, Connectivity: Wireless","4.7/5 - Feature heavy",₱6,499
+HyperX Pulsefire Haste,mouse,"Sensor: PAW3335, DPI: 16000, Buttons: 6, Weight: 59g, Connectivity: Wired","4.5/5 - Great value lightweight",₱2,499
+Roccat Kone Pro Air,mouse,"Sensor: Owl-Eye 19K, DPI: 19000, Buttons: 6, Weight: 75g, Connectivity: Wireless","4.4/5 - Comfortable ergo",₱4,999
+SteelSeries Aerox 5 Wireless,mouse,"Sensor: TrueMove Air, DPI: 18000, Buttons: 9, Weight: 74g, Connectivity: Wireless","4.5/5 - Many buttons",₱5,299
+ASUS ROG Keris Wireless,mouse,"Sensor: PMW3335, DPI: 16000, Buttons: 6, Weight: 79g, Connectivity: Wireless","4.3/5 - Hot-swappable switches",₱3,999
+Cooler Master MM711,mouse,"Sensor: PMW3389, DPI: 16000, Buttons: 6, Weight: 60g, Connectivity: Wired","4.2/5 - Budget lightweight",₱2,199
+Endgame Gear XM1r,mouse,"Sensor: PMW3370, DPI: 19000, Buttons: 5, Weight: 70g, Connectivity: Wired","4.6/5 - Underrated gem",₱3,299
+Razer Basilisk V3,mouse,"Sensor: Focus+ 26K, DPI: 26000, Buttons: 11, Weight: 101g, Connectivity: Wired","4.5/5 - All-rounder",₱4,299
+Logitech G203 Lightsync,mouse,"Sensor: Mercury, DPI: 8000, Buttons: 6, Weight: 85g, Connectivity: Wired","4.4/5 - Best budget mouse",₱1,199
+Lian Li O11 Dynamic EVO,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 0, Max GPU: 455mm, Color: Black","4.8/5 - Versatile and beautiful",₱7,999
+NZXT H9 Flow,cases,"Type: Dual Chamber, Side Panel: Tempered Glass, Fans: 0, Max GPU: 415mm, Color: White","4.7/5 - Excellent airflow",₱8,499
+Fractal Design North,cases,"Type: Mid Tower, Side Panel: Tempered Glass/Mesh, Fans: 2, Max GPU: 355mm, Color: Black/Walnut","4.9/5 - Unique design",₱6,999
+Corsair 4000D Airflow,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 2, Max GPU: 360mm, Color: Black","4.7/5 - Best value airflow",₱4,999
+Phanteks Eclipse G360A,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 3 RGB, Max GPU: 400mm, Color: Black","4.6/5 - Great with included fans",₱5,299
+Cooler Master MasterBox TD500 Mesh,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 3 ARGB, Max GPU: 410mm, Color: Black","4.5/5 - Good airflow design",₱4,799
+be quiet! Silent Base 802,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 3, Max GPU: 469mm, Color: Black","4.7/5 - Silent operation",₱8,999
+Hyte Y60,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 0, Max GPU: 375mm, Color: Black/White","4.8/5 - Showcase build case",₱9,999
+Lian Li Lancool 216,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 2x160mm+1x140mm, Max GPU: 392mm, Color: Black","4.6/5 - Excellent stock fans",₱5,499
+Fractal Design Pop Air,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 3, Max GPU: 405mm, Color: Various","4.4/5 - Fun colors available",₱4,299
+NZXT H5 Flow,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 2, Max GPU: 365mm, Color: Black","4.5/5 - Compact airflow",₱4,599
+Montech AIR 1000 Premium,cases,"Type: Mid Tower, Side Panel: Tempered Glass, Fans: 4 PWM, Max GPU: 350mm, Color: Black","4.3/5 - Budget with fans",₱3,299
+Deepcool CH510,cases,"Type: Mid
