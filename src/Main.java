@@ -1,8 +1,11 @@
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        CLInterface cli = new CLInterface();
+        OrderingSystemService systemService = new OrderingSystemService();
+        CLInterface cli = new CLInterface(new Scanner(System.in), systemService);
 
         cli.start();
     }
