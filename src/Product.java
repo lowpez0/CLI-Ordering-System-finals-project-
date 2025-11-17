@@ -12,5 +12,13 @@ public class Product {
         this.PRICE = PRICE;
     }
 
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "PRODUCT_NAME='" + PRODUCT_NAME + '\'' +
+                ", SPECIFICATIONS='" + SPECIFICATIONS + '\'' +
+                ", REVIEW='" + REVIEW + '\'' +
+                ", PRICE=" + PRICE +
+                '}';
+    }
 }
