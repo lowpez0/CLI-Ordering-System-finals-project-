@@ -6,7 +6,7 @@ public class Main {
 
         OrderingSystemService systemService = new OrderingSystemService();
         systemService.populateMapOfProducts();
-        systemService.printDemo();
+//        systemService.printDemo();
         CLInterface cli = new CLInterface(new Scanner(System.in), systemService);
 
         cli.start();

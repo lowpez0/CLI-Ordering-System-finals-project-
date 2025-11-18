@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CLInterface {
@@ -19,9 +20,10 @@ public class CLInterface {
                 3.Order History
                 4.View Cart
                 5.Checkout
+                
                 """);
         System.out.print("INPUT:");
-        int input = scanner.nextInt();
+        int input = Integer.parseInt(scanner.nextLine());
 
         switch(input) {
             case 1: viewItems();
@@ -30,14 +32,37 @@ public class CLInterface {
 
     public void viewItems() {
         System.out.println("""
+                                            
                                             CATEGORIES
-        1. CPU                  4. GRAPHIC CARTS      7. MEMORY              10. KEYBOARDS
-        2. MOTHERBOARDS         5. STORAGE            8. POWER SUPPLIES      11. MOUSE
-        3. CASES                6. COOLERS            9. MONITORS            12. HEADSETS & AUDIO
+                                            
+        . CPU                  . GRAPHIC CARDS      . MEMORY              . KEYBOARDS
+        . MOTHERBOARDS         . STORAGE            . POWER SUPPLIES      . MOUSE
+        . CASES                . COOLERS            . MONITORS            . AUDIO
         """);
-        System.out.println("INPUT: ");
-        int category = scanner.nextInt();
+        System.out.print("INPUT: ");
+        String category = scanner.nextLine();
+        ArrayList<Product> productList = systemService.getListByCategory(category);
+        StringBuilder str = getStringBuilder(category, productList);
+        System.out.println(str);
+    }
 
+
+
+    private StringBuilder getStringBuilder(String category, ArrayList<Product> productList) {
+        StringBuilder str = new StringBuilder();
+        str.append("""
+                
+                %-25s && %s &&
+                
+                %-6s %-36s %s
+                """.formatted("", category.toUpperCase(),"", "PRODUCT NAME", "PRICE"));
+        for(int i = 0; i < productList.size(); i++) {
+            Product product = productList.get(i);
+            str.append("""
+                    %d%-5s %-36s ₱%d
+                    """.formatted(i + 1, ".", product.getPRODUCT_NAME(), product.getPRICE()));
+        }
+        return str;
     }
 }
 

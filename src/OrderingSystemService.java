@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class OrderingSystemService {
-    private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
+    private final String PRODUCT_CSV_FILE = "C:\\Users\\sadsc\\IdeaProjects\\CLI-Ordering-System-finals-project-\\src\\products.csv";
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
 
     public void populateMapOfProducts()  {
@@ -29,9 +29,13 @@ public class OrderingSystemService {
         }
     }
 
+    public ArrayList<Product> getListByCategory(String category) {
+        return productsMap.get(category.toLowerCase().trim());
+    }
+
     //testing purpose
     public void printDemo() {
-        for(Product product: productsMap.get("keyboards")) {
+        for(Product product: productsMap.get("cpu")) {
             System.out.println(product);
         }
     }

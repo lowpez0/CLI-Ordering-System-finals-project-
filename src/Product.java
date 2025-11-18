@@ -12,6 +12,22 @@ public class Product {
         this.PRICE = PRICE;
     }
 
+    public String getPRODUCT_NAME() {
+        return this.PRODUCT_NAME;
+    }
+
+    public String getSPECIFICATIONS() {
+        return this.SPECIFICATIONS;
+    }
+
+    public String getREVIEW() {
+        return this.REVIEW;
+    }
+
+    public int getPRICE() {
+        return this.PRICE;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
