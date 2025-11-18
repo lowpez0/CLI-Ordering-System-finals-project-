@@ -13,6 +13,7 @@ public class CLInterface {
 
     public void start() {
         System.out.println("""
+                
                 BuildMyPc
                 
                 1.View Items
@@ -39,16 +40,26 @@ public class CLInterface {
         . MOTHERBOARDS         . STORAGE            . POWER SUPPLIES      . MOUSE
         . CASES                . COOLERS            . MONITORS            . AUDIO
         """);
-        System.out.print("INPUT: ");
-        String category = scanner.nextLine();
-        ArrayList<Product> productList = systemService.getListByCategory(category);
-        StringBuilder str = getStringBuilder(category, productList);
-        System.out.println(str);
+        System.out.print("-Type \"b\" to go back\nINPUT: ");
+        String input = scanner.nextLine();
+
+        if(input.trim().equalsIgnoreCase("b")) start();
+
+        ArrayList<Product> productList = systemService.getListByCategory(input);
+        formatAndPrint(input, productList);
+
+        System.out.println("Input:");
+        int product = Integer.parseInt(scanner.nextLine());
+    }
+
+    public void productInfo() {
+
     }
 
 
-
-    private StringBuilder getStringBuilder(String category, ArrayList<Product> productList) {
+    //method helper for viewItems() method
+    //formats the string so that product name and price aligns okay
+    private void formatAndPrint(String category, ArrayList<Product> productList) {
         StringBuilder str = new StringBuilder();
         str.append("""
                 
@@ -62,7 +73,9 @@ public class CLInterface {
                     %d%-5s %-36s ₱%d
                     """.formatted(i + 1, ".", product.getPRODUCT_NAME(), product.getPRICE()));
         }
-        return str;
+        System.out.println(str);
     }
 }
+
+
 
