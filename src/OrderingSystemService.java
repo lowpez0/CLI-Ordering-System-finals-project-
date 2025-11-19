@@ -4,7 +4,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class OrderingSystemService {
-    private final String PRODUCT_CSV_FILE = "C:\\Users\\sadsc\\IdeaProjects\\CLI-Ordering-System-finals-project-\\src\\products.csv";
+//  pc path for products.csv
+//  private final String PRODUCT_CSV_FILE = "C:\\Users\\sadsc\\IdeaProjects\\CLI-Ordering-System-finals-project-\\src\\products.csv"
+//  laptop path for products.csv
+    private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
+
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
 
     public void populateMapOfProducts()  {

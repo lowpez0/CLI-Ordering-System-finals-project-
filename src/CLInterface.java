@@ -43,17 +43,29 @@ public class CLInterface {
         System.out.print("-Type \"b\" to go back\nINPUT: ");
         String input = scanner.nextLine();
 
+        //go back feature
         if(input.trim().equalsIgnoreCase("b")) start();
 
         ArrayList<Product> productList = systemService.getListByCategory(input);
         formatAndPrint(input, productList);
 
-        System.out.println("Input:");
-        int product = Integer.parseInt(scanner.nextLine());
+        //for product info
+        System.out.print("Input:");
+        int product = Integer.parseInt(scanner.nextLine()) - 1;
+        printProductInfo(productList.get(product));
     }
 
-    public void productInfo() {
-
+    public void printProductInfo(Product product) {
+        System.out.printf("""
+                        
+                        %-30s %s
+                        %-29s %s
+                        %-29s %s
+                        %-30s %s
+                        %n""", "Product Name:", product.getPRODUCT_NAME(),
+        "Review:", product.getREVIEW(),
+        "Specifications:", product.getSPECIFICATIONS(),
+        "Price:", "₱" + product.getPRICE());
     }
 
 
