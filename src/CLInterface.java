@@ -21,11 +21,17 @@ public class CLInterface {
                 3.Order History
                 4.View Cart
                 5.Checkout
-                
                 """);
-        System.out.print("INPUT:");
-        int input = Integer.parseInt(scanner.nextLine());
-
+        System.out.print("""
+                -Type number to navigate
+                INPUT:\s""");
+        int input = 0;
+        try {
+            input = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid!");
+            start();
+        }
         switch(input) {
             case 1: viewCategories();
         }
@@ -56,7 +62,7 @@ public class CLInterface {
             System.out.print("""
                     -Type "b" to go back
                     -Type number of product for additional information
-                    Input:  """);
+                    Input:\s""");
             String input = scanner.nextLine();
             if(input.equalsIgnoreCase("b")) break;
             //prints product info
