@@ -7,7 +7,7 @@ public class OrderingSystemService {
 //  pc path for products.csv
   private final String PRODUCT_CSV_FILE = "C:\\Users\\sadsc\\IdeaProjects\\CLI-Ordering-System-finals-project-\\src\\products.csv";
 //  laptop path for products.csv
-//    private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
+//  private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
 
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
 
@@ -33,8 +33,11 @@ public class OrderingSystemService {
         }
     }
 
-    public ArrayList<Product> getListByCategory(String category) {
-        return productsMap.get(category.toLowerCase().trim());
+    public ArrayList<Product> getListByCategory(String category) throws Exception {
+        //throws an exception if category is not a key in productsMap
+        if(!productsMap.containsKey(category.toLowerCase())) {
+            throw new Exception();
+        } else{ return productsMap.get(category.toLowerCase()); }
     }
 
     //testing purpose

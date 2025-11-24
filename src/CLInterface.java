@@ -24,58 +24,77 @@ public class CLInterface {
                 """);
         System.out.print("""
                 -Type number to navigate
-                INPUT:\s""");
+                """);
         int input = 0;
-        try {
-            input = Integer.parseInt(scanner.nextLine().trim());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid!");
-            start();
-        }
-        switch(input) {
-            case 1: viewCategories();
-            default:
-                System.out.println("INVALID!");
-                start();
+        while (true) {
+            System.out.print("Input: ");
+            try {
+                input = Integer.parseInt(scanner.nextLine().trim());
+            } catch (Exception e) {
+                System.out.println("INVALID!\n");
+                continue;
+            }
+            if(input == 1) {
+                viewCategories();
+            } else {
+                System.out.println("INVALID!\n");
+                continue;
+            }
+            break;
         }
     }
+
 
     public void viewCategories() {
         System.out.println("""
-                                            
-                                            CATEGORIES
-                                            
-        . CPU                  . GRAPHIC CARDS      . MEMORY              . KEYBOARDS
-        . MOTHERBOARDS         . STORAGE            . POWER SUPPLIES      . MOUSE
-        . CASES                . COOLERS            . MONITORS            . AUDIO
-        """);
+                
+                                                    CATEGORIES
+                
+                . CPU                  . GRAPHIC CARDS      . MEMORY              . KEYBOARDS
+                . MOTHERBOARDS         . STORAGE            . POWER SUPPLIES      . MOUSE
+                . CASES                . COOLERS            . MONITORS            . AUDIO
+                """);
         System.out.print("""
                 -Type "b" to go back
                 -Type category to view items
-                Input:\s""");
-        String input = scanner.nextLine().trim();
+                """);
 
-        //go back feature
-        if(input.equalsIgnoreCase("b")) start();
-        viewItems(input);
+        String input;
+        ArrayList<Product> productList;
+        //loops so that it only prompts for another input when invalid instead of displaying categories again
+        while (true) {
+            System.out.print("Input: ");
+            input = scanner.nextLine().trim();
+            //go back feature
+            if (input.equalsIgnoreCase("b")) start();
+            try {
+                productList = systemService.getListByCategory(input);
+            } catch (Exception e) {
+                System.out.println("INVALID!\n");
+                continue;
+            }
+            break;
+        }
+        viewItems(input, productList);
+
     }
 
-    public void viewItems(String category) {
-        ArrayList<Product> productList = systemService.getListByCategory(category);
-        while(true) {
-            //prints items based on inputted category
-            formatAndPrint(category, productList);
-            System.out.print("""
-                    -Type "b" to go back
-                    -Type number of product for additional information
-                    Input:\s""");
+    public void viewItems(String category, ArrayList<Product> productList) {
+        //prints items based on inputted category
+        formatAndPrint(category, productList);
+        System.out.print("""
+                -Type "b" to go back
+                -Type number of product for additional information
+                """);
+        while (true) {
+            System.out.print("Input: ");
             String input = scanner.nextLine().trim();
-            if(input.equalsIgnoreCase("b")) break;
+            if (input.equalsIgnoreCase("b")) break;
             //prints product info
             try {
                 viewProductInfo(productList.get(Integer.parseInt(input) - 1));
-            } catch(Exception e){
-                System.out.println("Product does not exists!");
+            } catch (Exception e) {
+                System.out.println("INVALID!\n");
                 continue;
             }
         }
@@ -90,9 +109,9 @@ public class CLInterface {
                         %-29s %s
                         %-30s %s
                         %n""", "Product Name:", product.getPRODUCT_NAME(),
-        "Review:", product.getREVIEW(),
-        "Specifications:", product.getSPECIFICATIONS(),
-        "Price:", "₱" + product.getPRICE());
+                "Review:", product.getREVIEW(),
+                "Specifications:", product.getSPECIFICATIONS(),
+                "Price:", "₱" + product.getPRICE());
     }
 
     //method helper for viewItems() method
@@ -104,8 +123,8 @@ public class CLInterface {
                 %-25s && %s &&
                 
                 %-6s %-36s %s
-                """.formatted("", category.toUpperCase(),"", "PRODUCT NAME", "PRICE"));
-        for(int i = 0; i < productList.size(); i++) {
+                """.formatted("", category.toUpperCase(), "", "PRODUCT NAME", "PRICE"));
+        for (int i = 0; i < productList.size(); i++) {
             Product product = productList.get(i);
             str.append("""
                     %d%-5s %-36s ₱%d
