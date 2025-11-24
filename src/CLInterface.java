@@ -27,11 +27,11 @@ public class CLInterface {
         int input = Integer.parseInt(scanner.nextLine());
 
         switch(input) {
-            case 1: viewItems();
+            case 1: viewCategories();
         }
     }
 
-    public void viewItems() {
+    public void viewCategories() {
         System.out.println("""
                                             
                                             CATEGORIES
@@ -45,17 +45,27 @@ public class CLInterface {
 
         //go back feature
         if(input.trim().equalsIgnoreCase("b")) start();
-
-        ArrayList<Product> productList = systemService.getListByCategory(input);
-        formatAndPrint(input, productList);
-
-        //for product info
-        System.out.print("Input:");
-        int product = Integer.parseInt(scanner.nextLine()) - 1;
-        printProductInfo(productList.get(product));
+        viewItems(input);
     }
 
-    public void printProductInfo(Product product) {
+    public void viewItems(String category) {
+        ArrayList<Product> productList = systemService.getListByCategory(category);
+        while(true) {
+            //prints items based on inputted category
+            formatAndPrint(category, productList);
+            System.out.print("""
+                    -Type "b" to go back
+                    -Type number of product for additional information
+                    Input:  """);
+            String input = scanner.nextLine();
+            if(input.equalsIgnoreCase("b")) break;
+            //prints product info
+            viewProductInfo(productList.get(Integer.parseInt(input) - 1));
+        }
+        viewCategories();
+    }
+
+    public void viewProductInfo(Product product) {
         System.out.printf("""
                         
                         %-30s %s
@@ -67,7 +77,6 @@ public class CLInterface {
         "Specifications:", product.getSPECIFICATIONS(),
         "Price:", "₱" + product.getPRICE());
     }
-
 
     //method helper for viewItems() method
     //formats the string so that product name and price aligns okay
