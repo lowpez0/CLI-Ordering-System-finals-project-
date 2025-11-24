@@ -26,6 +26,7 @@ public class CLInterface {
                 -Type number to navigate
                 """);
         int input = 0;
+        //loops so that it only prompts for another input when invalid instead of displaying start again
         while (true) {
             System.out.print("Input: ");
             try {
@@ -86,6 +87,7 @@ public class CLInterface {
                 -Type "b" to go back
                 -Type number of product for additional information
                 """);
+        //loops so that it only prompts for another input when invalid instead of displaying items again
         while (true) {
             System.out.print("Input: ");
             String input = scanner.nextLine().trim();

@@ -11,6 +11,7 @@ public class OrderingSystemService {
 
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
 
+    //populates productsMap with data from products.csv
     public void populateMapOfProducts()  {
         try(BufferedReader br = new BufferedReader(new FileReader(PRODUCT_CSV_FILE))) {
           String line;
