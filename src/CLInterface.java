@@ -27,13 +27,16 @@ public class CLInterface {
                 INPUT:\s""");
         int input = 0;
         try {
-            input = Integer.parseInt(scanner.nextLine());
+            input = Integer.parseInt(scanner.nextLine().trim());
         } catch (NumberFormatException e) {
             System.out.println("Invalid!");
             start();
         }
         switch(input) {
             case 1: viewCategories();
+            default:
+                System.out.println("INVALID!");
+                start();
         }
     }
 
@@ -46,11 +49,14 @@ public class CLInterface {
         . MOTHERBOARDS         . STORAGE            . POWER SUPPLIES      . MOUSE
         . CASES                . COOLERS            . MONITORS            . AUDIO
         """);
-        System.out.print("-Type \"b\" to go back\nINPUT: ");
-        String input = scanner.nextLine();
+        System.out.print("""
+                -Type "b" to go back
+                -Type category to view items
+                Input:\s""");
+        String input = scanner.nextLine().trim();
 
         //go back feature
-        if(input.trim().equalsIgnoreCase("b")) start();
+        if(input.equalsIgnoreCase("b")) start();
         viewItems(input);
     }
 
@@ -63,10 +69,15 @@ public class CLInterface {
                     -Type "b" to go back
                     -Type number of product for additional information
                     Input:\s""");
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();
             if(input.equalsIgnoreCase("b")) break;
             //prints product info
-            viewProductInfo(productList.get(Integer.parseInt(input) - 1));
+            try {
+                viewProductInfo(productList.get(Integer.parseInt(input) - 1));
+            } catch(Exception e){
+                System.out.println("Product does not exists!");
+                continue;
+            }
         }
         viewCategories();
     }

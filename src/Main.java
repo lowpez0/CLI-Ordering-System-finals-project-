@@ -8,7 +8,6 @@ public class Main {
         systemService.populateMapOfProducts();
 //        systemService.printDemo();
         CLInterface cli = new CLInterface(new Scanner(System.in), systemService);
-
         cli.start();
     }
 }
