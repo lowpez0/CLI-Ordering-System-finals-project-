@@ -7,16 +7,8 @@ public class Main {
 
         OrderingSystemService systemService = new OrderingSystemService();
         systemService.populateMapOfProducts();
-        ArrayList<Product> list = systemService.getListByCategory("cpu");
-        ArrayList<Product> sorted = systemService.getAscSortedListByPrice(list);
-
-        for(Product product: sorted) {
-            System.out.println(product.getPRICE());
-        }
-
-
-////        systemService.printDemo();
-//        CLInterface cli = new CLInterface(new Scanner(System.in), systemService);
-//        cli.start();
+        //systemService.printDemo();
+        CLInterface cli = new CLInterface(new Scanner(System.in), systemService);
+        cli.start();
     }
 }

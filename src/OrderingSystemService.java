@@ -1,13 +1,12 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class OrderingSystemService {
 //  pc path for products.csv
-//  private final String PRODUCT_CSV_FILE = "C:\\Users\\sadsc\\IdeaProjects\\CLI-Ordering-System-finals-project-\\src\\products.csv";
+  private final String PRODUCT_CSV_FILE = "C:\\Users\\sadsc\\IdeaProjects\\CLI-Ordering-System-finals-project-\\src\\products.csv";
 //  laptop path for products.csv
-  private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
+//  private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
 
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
 
@@ -41,26 +40,17 @@ public class OrderingSystemService {
         } else{ return productsMap.get(category.toLowerCase()); }
     }
 
-    //returns an arraylist of product in ascending order.
-    public ArrayList<Product> getAscSortedListByPrice(ArrayList<Product> productsList) {
-        ArrayList<Product> sortedList = new ArrayList<>();
-        sortedList.add(productsList.getFirst());
-
-        for(int i = 1; i < productsList.size(); i++) {
-            for(int j = 0; j < sortedList.size(); j++) {
-                if(productsList.get(i).getPRICE() > sortedList.get(j).getPRICE()) {
-                    sortedList.add(j, productsList.get(i));
-
-                //place it on last index if lowest price.
-                } else if(j == (sortedList.size() - 1)) {
-                    sortedList.add(productsList.get(i));
-                }
-            }
-        }
-        return sortedList;
+    //returns list of product in descending order.
+    public ArrayList<Product> getDescListByPrice(ArrayList<Product> productsList) {
+        productsList.sort((p1, p2) -> Integer.compare(p2.getPRICE(), p1.getPRICE()));
+        return productsList;
     }
 
-
+    //returns list of product in ascending order.
+    public ArrayList<Product> getAsceListByPrice(ArrayList<Product> productsList) {
+        productsList.sort((p1, p2) -> Integer.compare(p1.getPRICE(), p2.getPRICE()));
+        return productsList;
+    }
 
     //testing purpose
     public void printDemo() {
