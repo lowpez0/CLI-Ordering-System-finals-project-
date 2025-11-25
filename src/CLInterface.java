@@ -56,8 +56,7 @@ public class CLInterface {
                 . CASES                . COOLERS            . MONITORS            . AUDIO
                 """);
         System.out.print("""
-                -Type "b" to go back
-                -Type category to view items
+                - Type "b" to go back        - Type category to view items
                 """);
 
         String input;
@@ -83,21 +82,28 @@ public class CLInterface {
     public void viewItems(String category, ArrayList<Product> productList) {
         //prints items based on inputted category
         formatAndPrint(category, productList);
-        System.out.print("""
-                -Type "b" to go back
-                -Type number of product for additional information
-                """);
         //loops so that it only prompts for another input when invalid instead of displaying items again
         while (true) {
+            System.out.print("""
+                - Type "b" to go back        - Type number of product for additional information        - Type "asc" to ascending order based on price        - Type "des" to descending order based on price
+                """);
             System.out.print("Input: ");
             String input = scanner.nextLine().trim();
-            if (input.equalsIgnoreCase("b")) break;
+            if (input.equalsIgnoreCase("b")) {
+                break;
+            } else if (input.equalsIgnoreCase("asc")) {
+                formatAndPrint(category, systemService.getAsceListByPrice(productList));
+                continue;
+            }
+              else if (input.equalsIgnoreCase("des")) {
+                  formatAndPrint(category, systemService.getDescListByPrice(productList));
+                  continue;
+            }
             //prints product info
             try {
                 viewProductInfo(productList.get(Integer.parseInt(input) - 1));
             } catch (Exception e) {
                 System.out.println("INVALID!\n");
-                continue;
             }
         }
         viewCategories();

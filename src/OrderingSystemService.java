@@ -40,13 +40,11 @@ public class OrderingSystemService {
         } else{ return productsMap.get(category.toLowerCase()); }
     }
 
-    //returns list of product in descending order.
     public ArrayList<Product> getDescListByPrice(ArrayList<Product> productsList) {
         productsList.sort((p1, p2) -> Integer.compare(p2.getPRICE(), p1.getPRICE()));
         return productsList;
     }
 
-    //returns list of product in ascending order.
     public ArrayList<Product> getAsceListByPrice(ArrayList<Product> productsList) {
         productsList.sort((p1, p2) -> Integer.compare(p1.getPRICE(), p2.getPRICE()));
         return productsList;
