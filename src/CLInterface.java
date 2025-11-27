@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class CLInterface {
@@ -37,6 +38,8 @@ public class CLInterface {
             }
             if(input == 1) {
                 viewCategories();
+            } else if(input == 4) {
+                viewCartItems();
             } else {
                 System.out.println("INVALID!\n");
                 continue;
@@ -101,7 +104,8 @@ public class CLInterface {
             //// checks if input is valid, if not catch the error and continue.
             try {
                 viewProductInfo(productList.get(Integer.parseInt(input) - 1));
-            } catch (Exception e) { System.out.println("INVALID!\n"); }
+            } catch (Exception e) {
+                System.out.println("INVALID!\n"); }
         }
         viewCategories();
     }
@@ -113,26 +117,44 @@ public class CLInterface {
                         %-29s %s
                         %-29s %s
                         %-30s %s
-                        %n""", "Product Name:", product.getPRODUCT_NAME(),
+                        %n""",
+                "Product Name:", product.getPRODUCT_NAME(),
                 "Review:", product.getREVIEW(),
                 "Specifications:", product.getSPECIFICATIONS(),
                 "Price:", "₱" + product.getPRICE());
         while(true) {
-            System.out.println("""
+            System.out.print("""
                     - Type "b" to go back        - Type "add" to place in cart
                     Input:\s""");
             String input = scanner.nextLine().trim().toLowerCase();
             if(input.equals("b")) return;
             else if (input.equals("add")) {
                 System.out.print("Quantity: ");
-                int quantity = scanner.nextInt();
+                int quantity = Integer.parseInt(scanner.nextLine().trim());
                 try {
                     systemService.addToCart(product, quantity);
-                    System.out.println("Added to cart!");
+                    System.out.println("Added to cart!\n");
                     return;
                 } catch (Exception e) { System.out.println("INVALID!"); }
             } else { System.out.println("INVALID!"); }
         }
+    }
+
+    public void viewCartItems() {
+        HashMap<Product, Integer> cart = systemService.getCart();
+        StringBuilder str = new StringBuilder();
+        str.append("""
+            
+            %-25s && %s &&
+            
+            %-7s %-36s %s
+            """.formatted("", "CART", "", "CART ITEMS", " QUANTITY"));
+        for(Product product: cart.keySet()) {
+            str.append("""
+                    %-7s %-37s %d
+                    """.formatted("", product.getPRODUCT_NAME() + " " + product.getREVIEW(), cart.get(product)));
+        }
+        System.out.println(str);
     }
 
     ////method helper for viewItems() method
