@@ -16,19 +16,7 @@ public class CLInterface {
         int input = 0;
         //loops so that it only prompts for another input when invalid instead of displaying start again
         while (true) {
-            System.out.println("""
-                
-                BuildMyPc
-                
-                1.View Items
-                2.Vouchers
-                3.Order History
-                4.View Cart
-                5.Checkout
-                """);
-            System.out.print("""
-                -Type number to navigate
-                Input:\s""");
+           printStartUI();
             try {
                 input = Integer.parseInt(scanner.nextLine().trim());
             } catch (Exception e) {
@@ -39,27 +27,17 @@ public class CLInterface {
                 viewCategories();
             } else if(input == 4) {
                 viewCartItems();
+            } else if(input == 6) {
+                break;
             } else {
                 System.out.println("INVALID!\n");
-                continue;
             }
         }
     }
 
 
     public void viewCategories() {
-        System.out.println("""
-                
-                                                    CATEGORIES
-                
-                . CPU                  . GRAPHIC CARDS      . MEMORY              . KEYBOARDS
-                . MOTHERBOARDS         . STORAGE            . POWER SUPPLIES      . MOUSE
-                . CASES                . COOLERS            . MONITORS            . AUDIO
-                """);
-        System.out.print("""
-                - Type "b" to go back        - Type category to view items
-                """);
-
+        printCategories();
         String input;
         ArrayList<Product> productList;
         ////loops so that it only prompts for another input when invalid instead of displaying categories again
@@ -108,17 +86,7 @@ public class CLInterface {
     }
 
     public void viewProductInfo(Product product) {
-        System.out.printf("""
-                        
-                        %-30s %s
-                        %-29s %s
-                        %-29s %s
-                        %-30s %s
-                        %n""",
-                "Product Name:", product.getPRODUCT_NAME(),
-                "Review:", product.getREVIEW(),
-                "Specifications:", product.getSPECIFICATIONS(),
-                "Price:", "₱" + product.getPRICE());
+        printProductInfo(product);
         while(true) {
             System.out.print("""
                     - Type "b" to go back        - Type "add" to place in cart
@@ -138,6 +106,53 @@ public class CLInterface {
     }
 
     public void viewCartItems() {
+        while(true) {
+            printCartItems();
+            System.out.print("""
+                    - Type "b" to go back        - Type item number to remove or change quantity.
+                    Input:\s""");
+            String input = scanner.nextLine().trim().toLowerCase();
+            if(input.equals("b")) return;
+            try {
+                System.out.print("""
+                        - Type "remove" to delete from cart       - Type "quantity" to change amount of order
+                        Input:\s""");
+                String input2 = scanner.nextLine().trim().toLowerCase();
+                if(input2.equals("remove")) {
+                    systemService.deleteCartItem(Integer.parseInt(input) - 1);
+                    System.out.println("Removed Item from Cart!");
+                } else if(input2.equals("quantity")) {
+                    System.out.print("New Quantity: ");
+                    int newQuantity = Integer.parseInt(scanner.nextLine().trim());
+                    systemService.changeCartItemQuantity(Integer.parseInt(input) - 1, newQuantity);
+                    System.out.println("Changed Quantity!");
+                }
+            } catch (Exception e) {
+                System.out.println("INVALID!");
+            }
+        }
+
+    }
+
+    ////
+    ///    PRIVATE METHODS SECTION FOR PRINTING AND FORMATTING
+    ///
+
+    private void printProductInfo(Product product) {
+        System.out.printf("""
+                        
+                        %-30s %s
+                        %-29s %s
+                        %-29s %s
+                        %-30s %s
+                        %n""",
+                "Product Name:", product.getPRODUCT_NAME(),
+                "Review:", product.getREVIEW(),
+                "Specifications:", product.getSPECIFICATIONS(),
+                "Price:", "₱" + product.getPRICE());
+    }
+
+    private void printCartItems() {
         HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
         str.append("""
@@ -147,15 +162,48 @@ public class CLInterface {
                  %-44s %s
             """.formatted("", "CART",
                 "CART ITEMS", " QUANTITY"));
+        int i = 0;
         for(Product product: cart.keySet()) {
             str.append("""
                     %-53s %d
                     %s
                     
-                    """.formatted(product.getPRODUCT_NAME(), cart.get(product),
+                    """.formatted((i + 1) + ". " +product.getPRODUCT_NAME(), cart.get(product),
                     "₱" + product.getPRICE() + "\t" + product.getREVIEW().trim()));
+            i++;
         }
         System.out.println(str);
+    }
+
+    private void printCategories() {
+        System.out.println("""
+                
+                                                    CATEGORIES
+                
+                . CPU                  . GRAPHIC CARDS      . MEMORY              . KEYBOARDS
+                . MOTHERBOARDS         . STORAGE            . POWER SUPPLIES      . MOUSE
+                . CASES                . COOLERS            . MONITORS            . AUDIO
+                """);
+        System.out.print("""
+                - Type "b" to go back        - Type category to view items
+                """);
+    }
+
+    private void printStartUI() {
+        System.out.println("""
+                
+                BuildMyPc
+                
+                1.View Items
+                2.Vouchers
+                3.Order History
+                4.View Cart
+                5.Checkout
+                6.Exit
+                """);
+        System.out.print("""
+                -Type number to navigate
+                Input:\s""");
     }
 
     ////method helper for viewItems() method
@@ -177,6 +225,3 @@ public class CLInterface {
         System.out.println(str);
     }
 }
-
-
-

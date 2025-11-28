@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class OrderingSystemService {
 ////  pc path for products.csv
@@ -9,7 +11,7 @@ public class OrderingSystemService {
 ////    private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
 
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
-    private final HashMap<Product, Integer> cart = new HashMap<>();
+    private final LinkedHashMap<Product, Integer> cart = new LinkedHashMap<>();
 
     ////populates productsMap with data from products.csv
     public void populateMapOfProducts()  {
@@ -64,6 +66,16 @@ public class OrderingSystemService {
 
     public HashMap<Product, Integer> getCart() {
         return this.cart;
+    }
+
+    public void changeCartItemQuantity(int index, int newQuantity) {
+        List<Product> indexedKeyOfMap = new ArrayList<>(cart.keySet());
+        cart.put(indexedKeyOfMap.get(index), newQuantity);
+    }
+
+    public void deleteCartItem(int index) {
+        List<Product> indexedKeyOfMap = new ArrayList<>(cart.keySet());
+        cart.remove(indexedKeyOfMap.get(index));
     }
 
     ////testing purpose
