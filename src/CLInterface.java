@@ -13,7 +13,10 @@ public class CLInterface {
     }
 
     public void start() {
-        System.out.println("""
+        int input = 0;
+        //loops so that it only prompts for another input when invalid instead of displaying start again
+        while (true) {
+            System.out.println("""
                 
                 BuildMyPc
                 
@@ -23,13 +26,9 @@ public class CLInterface {
                 4.View Cart
                 5.Checkout
                 """);
-        System.out.print("""
+            System.out.print("""
                 -Type number to navigate
-                """);
-        int input = 0;
-        //loops so that it only prompts for another input when invalid instead of displaying start again
-        while (true) {
-            System.out.print("Input: ");
+                Input:\s""");
             try {
                 input = Integer.parseInt(scanner.nextLine().trim());
             } catch (Exception e) {
@@ -44,7 +43,6 @@ public class CLInterface {
                 System.out.println("INVALID!\n");
                 continue;
             }
-            break;
         }
     }
 
@@ -69,7 +67,7 @@ public class CLInterface {
             System.out.print("Input: ");
             input = scanner.nextLine().toLowerCase().trim();
             ////go back feature
-            if (input.equalsIgnoreCase("b")) start();
+            if (input.equalsIgnoreCase("b")) return;
             try {
                 productList = systemService.getListByCategory(input);
             } catch (Exception e) {
@@ -83,8 +81,7 @@ public class CLInterface {
     }
 
     public void viewItems(String category, ArrayList<Product> productList) {
-        ////prints items based on inputted category
-        formatAndPrint(category, productList);
+        printItems(category, productList);
         ////loops so that it only prompts for another input when invalid instead of displaying items again
         while (true) {
             System.out.print("""
@@ -94,16 +91,16 @@ public class CLInterface {
             String input = scanner.nextLine().trim();
             if (input.equalsIgnoreCase("b")) { break; }
             else if (input.equalsIgnoreCase("asc")) {
-                formatAndPrint(category, systemService.getAsceListByPrice(productList));
+                printItems(category, systemService.getAsceListByPrice(productList));
                 continue;
             }
               else if (input.equalsIgnoreCase("des")) {
-                  formatAndPrint(category, systemService.getDescListByPrice(productList));
+                  printItems(category, systemService.getDescListByPrice(productList));
                   continue;
             }
             //// checks if input is valid, if not catch the error and continue.
             try {
-                viewProductInfo(productList.get(Integer.parseInt(input) - 1));
+                viewProductInfo(productList.get((Integer.parseInt(input) - 1)));
             } catch (Exception e) {
                 System.out.println("INVALID!\n"); }
         }
@@ -129,13 +126,13 @@ public class CLInterface {
             String input = scanner.nextLine().trim().toLowerCase();
             if(input.equals("b")) return;
             else if (input.equals("add")) {
-                System.out.print("Quantity: ");
-                int quantity = Integer.parseInt(scanner.nextLine().trim());
                 try {
+                    System.out.print("Quantity: ");
+                    int quantity = Integer.parseInt(scanner.nextLine().trim());
                     systemService.addToCart(product, quantity);
                     System.out.println("Added to cart!\n");
                     return;
-                } catch (Exception e) { System.out.println("INVALID!"); }
+                } catch (Exception e) { System.out.println("INVALID!\n"); }
             } else { System.out.println("INVALID!"); }
         }
     }
@@ -147,19 +144,23 @@ public class CLInterface {
             
             %-25s && %s &&
             
-            %-7s %-36s %s
-            """.formatted("", "CART", "", "CART ITEMS", " QUANTITY"));
+                 %-44s %s
+            """.formatted("", "CART",
+                "CART ITEMS", " QUANTITY"));
         for(Product product: cart.keySet()) {
             str.append("""
-                    %-7s %-37s %d
-                    """.formatted("", product.getPRODUCT_NAME() + " " + product.getREVIEW(), cart.get(product)));
+                    %-53s %d
+                    %s
+                    
+                    """.formatted(product.getPRODUCT_NAME(), cart.get(product),
+                    "₱" + product.getPRICE() + "\t" + product.getREVIEW().trim()));
         }
         System.out.println(str);
     }
 
     ////method helper for viewItems() method
-    ////formats the string so that product name and price aligns okay
-    private void formatAndPrint(String category, ArrayList<Product> productList) {
+    /// formats the string so that product name and price aligns okay
+    private void printItems(String category, ArrayList<Product> productList) {
         StringBuilder str = new StringBuilder();
         str.append("""
                 
