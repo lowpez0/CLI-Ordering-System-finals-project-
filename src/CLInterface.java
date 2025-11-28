@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class CLInterface {
@@ -23,18 +24,19 @@ public class CLInterface {
                 System.out.println("INVALID!\n");
                 continue;
             }
-            if(input == 1) {
-                viewCategories();
-            } else if(input == 4) {
-                viewCartItems();
-            } else if(input == 6) {
-                break;
-            } else {
-                System.out.println("INVALID!\n");
-            }
+                if(input == 1) {
+                    viewCategories();
+                } else if(input == 4) {
+                    viewCartItems();
+                } else if(input == 5) {
+                    viewCheckout();
+                } else if(input == 6) {
+                    break;
+                } else {
+                    System.out.println("INVALID!\n");
+                }
         }
     }
-
 
     public void viewCategories() {
         printCategories();
@@ -114,8 +116,9 @@ public class CLInterface {
             String input = scanner.nextLine().trim().toLowerCase();
             if(input.equals("b")) return;
             try {
+                systemService.checkIfItemExists(Integer.parseInt(input) - 1);
                 System.out.print("""
-                        - Type "remove" to delete from cart       - Type "quantity" to change amount of order
+                        \n- Type "remove" to delete from cart       - Type "quantity" to change amount of order
                         Input:\s""");
                 String input2 = scanner.nextLine().trim().toLowerCase();
                 if(input2.equals("remove")) {
@@ -126,11 +129,21 @@ public class CLInterface {
                     int newQuantity = Integer.parseInt(scanner.nextLine().trim());
                     systemService.changeCartItemQuantity(Integer.parseInt(input) - 1, newQuantity);
                     System.out.println("Changed Quantity!");
+                } else {
+                    System.out.println("INVALID!");
                 }
             } catch (Exception e) {
                 System.out.println("INVALID!");
             }
         }
+    }
+
+    public void viewCheckout() {
+        if(systemService.getCart().isEmpty()) {
+            System.out.println("NO ITEM FOUND IN CART!");
+            return;
+        }
+        int total = printOrderSummary();
 
     }
 
@@ -153,7 +166,7 @@ public class CLInterface {
     }
 
     private void printCartItems() {
-        HashMap<Product, Integer> cart = systemService.getCart();
+        LinkedHashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
         str.append("""
             
@@ -223,5 +236,26 @@ public class CLInterface {
                     """.formatted(i + 1 + ".", product.getPRODUCT_NAME(), product.getPRICE()));
         }
         System.out.println(str);
+    }
+
+    private int printOrderSummary() {
+        LinkedHashMap<Product, Integer> cart = systemService.getCart();
+        StringBuilder str = new StringBuilder();
+        str.append("""
+                
+                %-20s && %s &&
+                
+                     %-31s %-15s %s
+                """.formatted("", "ORDER SUMMARY",
+                "ITEMS", "QUANTITY", "PRICE"));
+        int total = 0;
+        for(Product product: cart.keySet()) {
+            total += (product.getPRICE() * cart.get(product));
+            str.append("""
+                    %-39s %-12d ₱%d
+                    """.formatted(product.getPRODUCT_NAME(), cart.get(product), product.getPRICE()));
+        }
+        System.out.println(str.append("\nTOTAL: ₱" + total));
+        return total;
     }
 }

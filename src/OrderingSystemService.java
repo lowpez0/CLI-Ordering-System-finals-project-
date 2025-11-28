@@ -64,13 +64,23 @@ public class OrderingSystemService {
         }
     }
 
-    public HashMap<Product, Integer> getCart() {
+    public LinkedHashMap<Product, Integer> getCart() {
         return this.cart;
     }
 
     public void changeCartItemQuantity(int index, int newQuantity) {
         List<Product> indexedKeyOfMap = new ArrayList<>(cart.keySet());
+        ////delete from cart if new quantity is equal or less than 0
+        if(newQuantity <= 0) {
+            cart.remove(indexedKeyOfMap.get(index));
+            return;
+        }
         cart.put(indexedKeyOfMap.get(index), newQuantity);
+    }
+
+    public void checkIfItemExists(int index)  {
+        List<Product> indexedKeyOfMap = new ArrayList<>(cart.keySet());
+        indexedKeyOfMap.get(index);
     }
 
     public void deleteCartItem(int index) {

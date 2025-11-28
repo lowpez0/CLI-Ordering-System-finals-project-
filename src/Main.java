@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -7,7 +6,6 @@ public class Main {
 
         OrderingSystemService systemService = new OrderingSystemService();
         systemService.populateMapOfProducts();
-        //systemService.printDemo();
         CLInterface cli = new CLInterface(new Scanner(System.in), systemService);
         cli.start();
     }
