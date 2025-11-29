@@ -16,7 +16,8 @@ public class CLInterface {
     public void start() {
         int input = 0;
         //loops so that it only prompts for another input when invalid instead of displaying start again
-        while (true) {
+        boolean loop = true;
+        while (loop) {
            printStartUI();
             try {
                 input = Integer.parseInt(scanner.nextLine().trim());
@@ -24,17 +25,15 @@ public class CLInterface {
                 System.out.println("INVALID!\n");
                 continue;
             }
-                if(input == 1) {
-                    viewCategories();
-                } else if(input == 4) {
-                    viewCartItems();
-                } else if(input == 5) {
-                    viewCheckout();
-                } else if(input == 6) {
-                    break;
-                } else {
-                    System.out.println("INVALID!\n");
-                }
+
+            switch(input) {
+                case 1: viewCategories(); break;
+                case 2: viewVouchers();   break;
+                case 4: viewCartItems();  break;
+                case 5: viewCheckout();   break;
+                case 6: loop = false;     break;
+                default: System.out.println("INVALID");
+            }
         }
     }
 
@@ -145,6 +144,28 @@ public class CLInterface {
         }
         int total = printOrderSummary();
 
+    }
+
+    public void viewVouchers() {
+        StringBuilder str = new StringBuilder();
+        str.append("""
+                
+                %-25s && %s &&
+                """.formatted("", "VOUCHERS"));
+        for(String voucher: systemService.getVouchers().keySet()) {
+            str.append("""
+                    %s
+                    """.formatted(voucher));
+        }
+        while (true) {
+            System.out.print("""
+                    - Type "b" to go back
+                    Input:\s""");
+            if (scanner.nextLine().trim().equalsIgnoreCase("b")) return;
+            else {
+                System.out.println("INVALID");
+            }
+        }
     }
 
     ////
