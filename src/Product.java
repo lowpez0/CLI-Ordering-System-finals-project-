@@ -30,6 +30,10 @@ public class Product {
         return this.PRICE;
     }
 
+    public String getCATEGORY() {
+        return this.CATEGORY;
+    }
+
     @Override
     public String toString() {
         return "Product{" +

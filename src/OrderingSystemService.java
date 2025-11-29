@@ -20,11 +20,11 @@ public class OrderingSystemService {
     }
 
     private void populateMapOfVouchers() {
-        vouchers.put("\"BUNDLE10\"", "- 10% off when purchasing CPU + MOTHERBOARD + RAM together.");
+        vouchers.put("\"BUNDLE10\"", "- 10% off when purchasing CPU + MOTHERBOARD + MEMORY together.");
         vouchers.put("\"BIGSPENDER\"", "- ₱1,000 off orders over ₱20,000");
-        vouchers.put("\"FULLBUILD15\"", "- 15% off when buying all 6 core components");
+        vouchers.put("\"FULLBUILD15\"", "- 15% off when buying all 6 core components (CPU, Motherboard, Memory, Storage, PSU, Case)");
         vouchers.put("\"GAMEREADY\"", "- 12% off when buying GPU + Gaming Monitor");
-        vouchers.put("\"DOUBLESTORAGE\"", "- 20% off SSDs when buying 2 or more storage devices");
+        vouchers.put("\"DOUBLESTORAGE\"", "- ₱200 off orders when buying 2 or more storage devices");
     }
 
     ////populates productsMap with data from products.csv
@@ -40,11 +40,11 @@ public class OrderingSystemService {
               if(!productsMap.containsKey(category)) {
                   ArrayList<Product> productList = new ArrayList<>();
                   productsMap.put(category, productList);
-                  //// split[0] = product name, split[2] = specifications, split[3] = review, split[4] = price, split[1] = category
-                  productsMap.get(category).add(new Product(split[0], split[2], split[3], Integer.parseInt(split[4].trim()), split[1]));
+                  //// split[0] = product name, split[2] = specifications, split[3] = review, split[4] = price,
+                  productsMap.get(category).add(new Product(split[0], split[2], split[3], Integer.parseInt(split[4].trim()), category));
                   continue;
               }
-              productsMap.get(category).add(new Product(split[0], split[2], split[3], Integer.parseInt(split[4].trim()), split[1]));
+              productsMap.get(category).add(new Product(split[0], split[2], split[3], Integer.parseInt(split[4].trim()), category));
           }
         } catch (IOException e) {
             System.out.println("ERROR in populateMapOfProducts()");
@@ -108,13 +108,84 @@ public class OrderingSystemService {
         return this.vouchers;
     }
 
-    public void printApplicableVouchers() {
-        HashMap<Product, Integer> cart = this.cart;
-        boolean cpu, motherboard, ram = false;
-
+    ////returns 0 if invalid or not applicable voucher
+    public double applyVoucherIfApplicable(String voucher, double totalPrice) {
+        return switch (voucher) {
+            case "BUNDLE10" -> bundle10(totalPrice);
+            case "BIGSPENDER" -> bigSPENDER(totalPrice);
+            case "FULLBUILD15" -> fullBuild15(totalPrice);
+            case "GAMEREADY" -> gameReady(totalPrice);
+            case "DOUBLESTORAGE" -> doubleStorage(totalPrice);
+            default -> 0;
+        };
     }
 
-    ////testing purpose
+    ///===============================================
+    /// private method helpers for applyVoucherIfApplicable()
+    ///================================================
+
+    //// returns 200 off totalPrice if bought 2 or more storage
+    private double doubleStorage(double totalPrice) {
+        int storageCount = 0;
+        for(Product product: this.cart.keySet()) {
+            if(product.getCATEGORY().equals("memory")) {
+                storageCount += this.cart.get(product);
+            }
+        }
+        return storageCount >= 2 ? totalPrice - 200: 0;
+    }
+
+    ///returns 12% off totalPrice if bought gpu and monitor
+    private double gameReady(double totalPrice) {
+        boolean gpu = false, monitor = false;
+        for(Product product: this.cart.keySet()) {
+            switch (product.getCATEGORY()) {
+                case "graphic cards" -> gpu = true;
+                case "monitors" -> monitor = true;
+            }
+        }
+        return gpu && monitor ? totalPrice - (totalPrice * 0.12): 0;
+    }
+
+    ///returns 15% off totalPrice if bought 6 core components
+    private double fullBuild15(double totalPrice) {
+        boolean cpu = false, motherboard = false, memory = false, storage = false, psu = false, pcCase = false;
+        for(Product product: this.cart.keySet()) {
+            switch (product.getCATEGORY()) {
+                case "cpu" -> cpu = true;
+                case "motherboards" -> motherboard = true;
+                case "memory" -> memory = true;
+                case "storage" -> storage = true;
+                case "power supplies" -> psu = true;
+                case "cases" -> pcCase = true;
+            }
+        }
+        return cpu && motherboard && memory && storage && psu && pcCase ?
+                totalPrice - (totalPrice * 0.15): 0;
+    }
+
+    ///return 1000 pesos off totalPrice if totalPrice is over 20000
+    private double bigSPENDER(double totalPrice) {
+        return totalPrice > 20000 ? totalPrice - 1000: 0;
+    }
+
+    ///return 10% off totalPrice if bought cpu, motherboard, and memory
+    private double bundle10(double totalPrice) {
+        boolean cpu = false, motherboard = false, memory = false;
+        for(Product product: this.cart.keySet()) {
+            switch (product.getCATEGORY()) {
+                case "cpu" -> cpu = true;
+                case "motherboards" -> motherboard = true;
+                case "memory" -> memory = true;
+            }
+        }
+        return cpu && motherboard && memory ? totalPrice = totalPrice - (totalPrice * 0.10): 0;
+    }
+
+    ///================================================================
+    ///================================================================
+
+    ///testing purpose
     public void printDemo() {
         for(Product product: productsMap.get("cpu")) {
             System.out.println(product);

@@ -141,19 +141,21 @@ public class CLInterface {
             System.out.println("NO ITEM FOUND IN CART!");
             return;
         }
-        int total = printOrderSummary();
+        double total = printOrderSummary();
         System.out.println("Vouchers: ");
         StringBuilder str = new StringBuilder();
         for(String voucher: systemService.getVouchers().keySet())
             str.append(voucher + ", ");
         System.out.println(str);
-        System.out.print("""
-                
-                - Type "b" to go back        - Type name of voucher to apply it        - Type "description" to view voucher details
-                Input:\s""");
-        String input = scanner.nextLine().trim().toLowerCase();
-        if(input.equals("b")) return;
-        else if(input.equals("description")) viewVouchers();
+        while(true) {
+            System.out.print("""
+                    
+                    - Type "b" to go back        - Type name of voucher to apply it        - Type "description" to view voucher details
+                    Input:\s""");
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("b")) return;
+            else if (input.equals("description")) viewVouchers();
+        }
     }
 
     public void viewVouchers() {
@@ -276,7 +278,7 @@ public class CLInterface {
         System.out.println(str);
     }
 
-    private int printOrderSummary() {
+    private double printOrderSummary() {
         HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
         str.append("""
@@ -286,7 +288,7 @@ public class CLInterface {
                      %-31s %-15s %s
                 """.formatted("", "ORDER SUMMARY",
                 "ITEMS", "QUANTITY", "PRICE"));
-        int total = 0;
+        double total = 0;
         for(Product product: cart.keySet()) {
             total += (product.getPRICE() * cart.get(product));
             str.append("""
