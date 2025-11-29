@@ -165,6 +165,7 @@ public class CLInterface {
 
     private void processCheckoutInput(double originalPrice) {
         double appliedVoucherPrice = 0;
+        StringBuilder voucher = new StringBuilder();
         while (true) {
             System.out.print("""
                 
@@ -180,7 +181,7 @@ public class CLInterface {
                     continue;
                 }
                 case "pay" -> {
-                    confirmOrder(originalPrice, appliedVoucherPrice);
+                    confirmOrder(originalPrice, appliedVoucherPrice, voucher);
                     return;
                 }
             }
@@ -192,6 +193,7 @@ public class CLInterface {
                 System.out.println("VOUCHER IS NOT APPLICABLE!\n");
                 continue;
             }
+            voucher.append(input.toUpperCase());
             System.out.println("VOUCHER APPLIED!");
         }
     }
@@ -204,41 +206,63 @@ public class CLInterface {
         System.out.println(str);
     }
 
-    private void confirmOrder(double originalPrice, double appliedVoucherPrice) {
+    private void confirmOrder(double originalPrice, double appliedVoucherPrice, StringBuilder voucher) {
         double total = 0;
         if(!(appliedVoucherPrice == 0 || appliedVoucherPrice == 1))
-            total = appliedVoucherPrice;
+            total += appliedVoucherPrice;
         else total = originalPrice;
         System.out.printf("""
                 
                 💰 CASH ON DELIVERY
-                Total: ₱%d
+                Total: ₱%.2f
+                Used voucher: %s
                 
-                Confirm order? "y"\s""", total);
+                Confirm order? "y"\s
+                Input:\s""", total, voucher);
         if (!scanner.nextLine().trim().equalsIgnoreCase("y")) return;
         System.out.println("✅ Order confirmed! Your items will be delivered.");
         simulateOrderArriving();
         System.out.println("✅ Your order have been delivered.");
+        printReceipt(originalPrice, appliedVoucherPrice, voucher);
     }
 
-    private void printReceipt() {
+    private void printReceipt(double originalPrice, double appliedVoucherPrice, StringBuilder voucher) {
         HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
         str.append("""
-                                    BuildMyPc
-                                Telp. 09165595489
-                *****************************************************
-                              C A S H   R E C E I P T                
-                *****************************************************
+                                             
+                                             
+                                             BuildMyPc
+                                         Telp. 09165595489
+                                         
+                                         
+                *****************************************************************
+                                     C A S H   R E C E I P T                
+                *****************************************************************
                 
-                Description                           QTY       PRICE            
+                   Description                           Q T Y        P R I C E            
                 """);
         for(Product product: cart.keySet()) {
+            int qty = cart.get(product);
             str.append("""
-                    %-38s
-                    """)
+                       %-38s %-12d ₱%d
+                    """.formatted(product.getPRODUCT_NAME(), qty, (product.getPRICE() * qty)));
         }
-
+        str.append("""
+                
+                *****************************************************************
+                   Original Price: %-33s ₱%.2f
+                   Voucher used: %-34s- ₱%.2f
+                -----------------------------------------------------------------
+                   Total Paid: %-37s ₱%.2f
+                
+                *****************************************************************
+                
+                                       T H A N K  Y O U !
+                """.formatted("", originalPrice,
+                "\"" + voucher + "\"", (originalPrice - appliedVoucherPrice),
+                "", appliedVoucherPrice));
+        System.out.println(str);
     }
 
     private void simulateOrderArriving() {
@@ -396,3 +420,6 @@ public class CLInterface {
         return total;
     }
 }
+
+fix bug cart not clearing after checkout
+fix bug can apply multiple vouchers
