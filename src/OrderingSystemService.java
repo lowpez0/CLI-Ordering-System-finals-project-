@@ -20,11 +20,11 @@ public class OrderingSystemService {
     }
 
     private void populateMapOfVouchers() {
-        vouchers.put("\"BUNDLE10\"", "- 10% off when purchasing CPU + MOTHERBOARD + MEMORY together.");
-        vouchers.put("\"BIGSPENDER\"", "- ₱1,000 off orders over ₱20,000");
-        vouchers.put("\"FULLBUILD15\"", "- 15% off when buying all 6 core components (CPU, Motherboard, Memory, Storage, PSU, Case)");
-        vouchers.put("\"GAMEREADY\"", "- 12% off when buying GPU + Gaming Monitor");
-        vouchers.put("\"DOUBLESTORAGE\"", "- ₱200 off orders when buying 2 or more storage devices");
+        vouchers.put("BUNDLE10", "- 10% off when purchasing CPU + MOTHERBOARD + MEMORY together.");
+        vouchers.put("BIGSPENDER", "- ₱1,000 off orders over ₱20,000");
+        vouchers.put("FULLBUILD15", "- 15% off when buying all 6 core components (CPU, Motherboard, Memory, Storage, PSU, Case)");
+        vouchers.put("GAMEREADY", "- 12% off when buying GPU + Gaming Monitor");
+        vouchers.put("DOUBLESTORAGE", "- ₱200 off orders when buying 2 or more storage devices");
     }
 
     ////populates productsMap with data from products.csv
@@ -108,7 +108,7 @@ public class OrderingSystemService {
         return this.vouchers;
     }
 
-    ////returns 0 if invalid or not applicable voucher
+    ////returns 0 if not applicable voucher and 1 if wrong input
     public double applyVoucherIfApplicable(String voucher, double totalPrice) {
         return switch (voucher) {
             case "BUNDLE10" -> bundle10(totalPrice);
@@ -116,7 +116,7 @@ public class OrderingSystemService {
             case "FULLBUILD15" -> fullBuild15(totalPrice);
             case "GAMEREADY" -> gameReady(totalPrice);
             case "DOUBLESTORAGE" -> doubleStorage(totalPrice);
-            default -> 0;
+            default -> 1;
         };
     }
 
@@ -173,13 +173,14 @@ public class OrderingSystemService {
     private double bundle10(double totalPrice) {
         boolean cpu = false, motherboard = false, memory = false;
         for(Product product: this.cart.keySet()) {
+            System.out.println(product.getCATEGORY());
             switch (product.getCATEGORY()) {
                 case "cpu" -> cpu = true;
                 case "motherboards" -> motherboard = true;
                 case "memory" -> memory = true;
             }
         }
-        return cpu && motherboard && memory ? totalPrice = totalPrice - (totalPrice * 0.10): 0;
+        return cpu && motherboard && memory ? totalPrice - (totalPrice * 0.10): 0;
     }
 
     ///================================================================

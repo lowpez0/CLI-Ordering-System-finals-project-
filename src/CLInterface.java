@@ -17,7 +17,7 @@ public class CLInterface {
         ////loops so that it only prompts for another input when invalid instead of displaying start again
         boolean loop = true;
         while (loop) {
-           printStartUI();
+            printStartUI();
             try {
                 input = Integer.parseInt(scanner.nextLine().trim());
             } catch (Exception e) {
@@ -25,18 +25,30 @@ public class CLInterface {
                 continue;
             }
 
-            switch(input) {
-                case 1: viewCategories(); break;
-                case 2: viewVouchers();   break;
-                case 4: viewCartItems();  break;
-                case 5: viewCheckout();   break;
-                case 6: loop = false;     break;
-                default: System.out.println("INVALID");
+            switch (input) {
+                case 1:
+                    viewCategories();
+                    break;
+                case 2:
+                    viewVouchers();
+                    break;
+                case 4:
+                    viewCartItems();
+                    break;
+                case 5:
+                    viewCheckout();
+                    break;
+                case 6:
+                    loop = false;
+                    break;
+                default:
+                    System.out.println("INVALID");
             }
         }
+        System.out.println("END PROGRAM!");
     }
 
-    public void viewCategories() {
+    private void viewCategories() {
         printCategories();
         String input;
         ArrayList<Product> productList;
@@ -58,41 +70,42 @@ public class CLInterface {
 
     }
 
-    public void viewItems(String category, ArrayList<Product> productList) {
+    private void viewItems(String category, ArrayList<Product> productList) {
         printItems(category, productList);
-        ////loops so that it only prompts for another input when invalid instead of displaying items again
+        ///loops so that it only prompts for another input when invalid instead of displaying items again
         while (true) {
             System.out.print("""
-                - Type "b" to go back        - Type number of product for additional information        - Type "asc" to ascending order based on price        - Type "des" to descending order based on price
-                """);
+                    - Type "b" to go back        - Type number of product for additional information        - Type "asc" to ascending order based on price        - Type "des" to descending order based on price
+                    """);
             System.out.print("Input: ");
             String input = scanner.nextLine().trim();
-            if (input.equalsIgnoreCase("b")) { break; }
-            else if (input.equalsIgnoreCase("asc")) {
+            if (input.equalsIgnoreCase("b")) {
+                break;
+            } else if (input.equalsIgnoreCase("asc")) {
                 printItems(category, systemService.getAsceListByPrice(productList));
                 continue;
-            }
-              else if (input.equalsIgnoreCase("des")) {
-                  printItems(category, systemService.getDescListByPrice(productList));
-                  continue;
+            } else if (input.equalsIgnoreCase("des")) {
+                printItems(category, systemService.getDescListByPrice(productList));
+                continue;
             }
             //// checks if input is valid, if not catch the error and continue.
             try {
                 viewProductInfo(productList.get((Integer.parseInt(input) - 1)));
             } catch (Exception e) {
-                System.out.println("INVALID!\n"); }
+                System.out.println("INVALID!\n");
+            }
         }
         viewCategories();
     }
 
-    public void viewProductInfo(Product product) {
+    private void viewProductInfo(Product product) {
         printProductInfo(product);
-        while(true) {
+        while (true) {
             System.out.print("""
                     - Type "b" to go back        - Type "add" to place in cart
                     Input:\s""");
             String input = scanner.nextLine().trim().toLowerCase();
-            if(input.equals("b")) return;
+            if (input.equals("b")) return;
             else if (input.equals("add")) {
                 try {
                     System.out.print("Quantity: ");
@@ -100,29 +113,33 @@ public class CLInterface {
                     systemService.addToCart(product, quantity);
                     System.out.println("Added to cart!\n");
                     return;
-                } catch (Exception e) { System.out.println("INVALID!\n"); }
-            } else { System.out.println("INVALID!"); }
+                } catch (Exception e) {
+                    System.out.println("INVALID!\n");
+                }
+            } else {
+                System.out.println("INVALID!");
+            }
         }
     }
 
-    public void viewCartItems() {
-        while(true) {
+    private void viewCartItems() {
+        while (true) {
             printCartItems();
             System.out.print("""
                     - Type "b" to go back        - Type item number to remove or change quantity.
                     Input:\s""");
             String input = scanner.nextLine().trim().toLowerCase();
-            if(input.equals("b")) return;
+            if (input.equals("b")) return;
             try {
                 systemService.checkIfItemExists(Integer.parseInt(input) - 1);
                 System.out.print("""
                         \n- Type "remove" to delete from cart       - Type "quantity" to change amount of order
                         Input:\s""");
                 String input2 = scanner.nextLine().trim().toLowerCase();
-                if(input2.equals("remove")) {
+                if (input2.equals("remove")) {
                     systemService.deleteCartItem(Integer.parseInt(input) - 1);
                     System.out.println("Removed Item from Cart!");
-                } else if(input2.equals("quantity")) {
+                } else if (input2.equals("quantity")) {
                     System.out.print("New Quantity: ");
                     int newQuantity = Integer.parseInt(scanner.nextLine().trim());
                     systemService.changeCartItemQuantity(Integer.parseInt(input) - 1, newQuantity);
@@ -136,25 +153,104 @@ public class CLInterface {
         }
     }
 
-    public void viewCheckout() {
-        if(systemService.getCart().isEmpty()) {
+    private void viewCheckout() {
+        if (systemService.getCart().isEmpty()) {
             System.out.println("NO ITEM FOUND IN CART!");
             return;
         }
-        double total = printOrderSummary();
+        double originalPrice = printOrderSummary();
+        displayAvailableVouchers();
+        processCheckoutInput(originalPrice);
+    }
+
+    private void processCheckoutInput(double originalPrice) {
+        double appliedVoucherPrice = 0;
+        while (true) {
+            System.out.print("""
+                
+                - Type "b" to go back        -Type "pay" to checkout        - Type name of voucher to apply it        - Type "description" to view voucher details
+                Input:\s""");
+            String input = scanner.nextLine().trim().toLowerCase();
+            switch (input) {
+                case "b" -> {
+                    return;
+                }
+                case "description" -> {
+                    viewVouchers();
+                    continue;
+                }
+                case "pay" -> {
+                    confirmOrder(originalPrice, appliedVoucherPrice);
+                    return;
+                }
+            }
+            appliedVoucherPrice = systemService.applyVoucherIfApplicable(input.toUpperCase(), originalPrice);
+            if (appliedVoucherPrice == 1) {
+                System.out.println("INVALID!\n");
+                continue;
+            } else if (appliedVoucherPrice == 0) {
+                System.out.println("VOUCHER IS NOT APPLICABLE!\n");
+                continue;
+            }
+            System.out.println("VOUCHER APPLIED!");
+        }
+    }
+
+    private void displayAvailableVouchers() {
         System.out.println("Vouchers: ");
         StringBuilder str = new StringBuilder();
-        for(String voucher: systemService.getVouchers().keySet())
-            str.append(voucher + ", ");
+        for (String voucher : systemService.getVouchers().keySet())
+            str.append("\"" + voucher + "\"" + ", ");
         System.out.println(str);
-        while(true) {
-            System.out.print("""
-                    
-                    - Type "b" to go back        - Type name of voucher to apply it        - Type "description" to view voucher details
-                    Input:\s""");
-            String input = scanner.nextLine().trim().toLowerCase();
-            if (input.equals("b")) return;
-            else if (input.equals("description")) viewVouchers();
+    }
+
+    private void confirmOrder(double originalPrice, double appliedVoucherPrice) {
+        double total = 0;
+        if(!(appliedVoucherPrice == 0 || appliedVoucherPrice == 1))
+            total = appliedVoucherPrice;
+        else total = originalPrice;
+        System.out.printf("""
+                
+                💰 CASH ON DELIVERY
+                Total: ₱%d
+                
+                Confirm order? "y"\s""", total);
+        if (!scanner.nextLine().trim().equalsIgnoreCase("y")) return;
+        System.out.println("✅ Order confirmed! Your items will be delivered.");
+        simulateOrderArriving();
+        System.out.println("✅ Your order have been delivered.");
+    }
+
+    private void printReceipt() {
+        HashMap<Product, Integer> cart = systemService.getCart();
+        StringBuilder str = new StringBuilder();
+        str.append("""
+                                    BuildMyPc
+                                Telp. 09165595489
+                *****************************************************
+                              C A S H   R E C E I P T                
+                *****************************************************
+                
+                Description                           QTY       PRICE            
+                """);
+        for(Product product: cart.keySet()) {
+            str.append("""
+                    %-38s
+                    """)
+        }
+
+    }
+
+    private void simulateOrderArriving() {
+        try {
+            System.out.print("Loading");
+            for (int i = 0; i < 3; i++) {
+                Thread.sleep(1000); // Sleep for 2 seconds
+                System.out.print(". ");
+            }
+            System.out.println(); // New line after completion
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -171,9 +267,10 @@ public class CLInterface {
         }
     }
 
-    ////
+    ///
     ///    PRIVATE METHODS SECTION FOR PRINTING AND FORMATTING
     ///
+
 
     private void printVouchers() {
         StringBuilder str = new StringBuilder();
@@ -183,10 +280,10 @@ public class CLInterface {
                 
                 """.formatted("", "VOUCHERS"));
         HashMap<String, String> vouchers = systemService.getVouchers();
-        for(String voucher: vouchers.keySet()) {
+        for (String voucher : vouchers.keySet()) {
             str.append("""
                     %-20s %s
-                    """.formatted(voucher,  vouchers.get(voucher)));
+                    """.formatted("\"" + voucher + "\"", vouchers.get(voucher)));
         }
         System.out.println(str);
     }
@@ -209,19 +306,19 @@ public class CLInterface {
         HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
         str.append("""
-            
-            %-25s && %s &&
-            
-                 %-44s %s
-            """.formatted("", "CART",
+                
+                %-25s && %s &&
+                
+                     %-44s %s
+                """.formatted("", "CART",
                 "CART ITEMS", " QUANTITY"));
         int i = 0;
-        for(Product product: cart.keySet()) {
+        for (Product product : cart.keySet()) {
             str.append("""
                     %-53s %d
                     %s
                     
-                    """.formatted((i + 1) + ". " +product.getPRODUCT_NAME(), cart.get(product),
+                    """.formatted((i + 1) + ". " + product.getPRODUCT_NAME(), cart.get(product),
                     "₱" + product.getPRICE() + "\t" + product.getREVIEW().trim()));
             i++;
         }
@@ -259,7 +356,7 @@ public class CLInterface {
                 Input:\s""");
     }
 
-    ////method helper for viewItems() method
+    /// /method helper for viewItems() method
     /// formats the string so that product name and price aligns okay
     private void printItems(String category, ArrayList<Product> productList) {
         StringBuilder str = new StringBuilder();
@@ -289,7 +386,7 @@ public class CLInterface {
                 """.formatted("", "ORDER SUMMARY",
                 "ITEMS", "QUANTITY", "PRICE"));
         double total = 0;
-        for(Product product: cart.keySet()) {
+        for (Product product : cart.keySet()) {
             total += (product.getPRICE() * cart.get(product));
             str.append("""
                     %-39s %-12d ₱%d
