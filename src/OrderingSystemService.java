@@ -11,10 +11,24 @@ public class OrderingSystemService {
 ////    private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
 
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
+    private final HashMap<String, Double> vouchers = new HashMap<>();
     private final LinkedHashMap<Product, Integer> cart = new LinkedHashMap<>();
 
+    public OrderingSystemService() {
+        populateMapOfProducts();
+        populateMapOfVouchers();
+    }
+
+    private void populateMapOfVouchers() {
+        vouchers.put("\"BUNDLE10\" - 10% off when purchasing CPU + MOTHERBOARD + RAM together.", 0.10);
+        vouchers.put("\"BIGSPENDER\" - ₱1,000 off orders over ₱20,000", 1000.0);
+        vouchers.put("\"FULLBUILD15\" - 15% off when buying all 6 core components", 0.15);
+        vouchers.put("\"GAMEREADY\" - 12% off when buying GPU + Gaming Monitor", 0.12);
+        vouchers.put("\"DOUBLESTORAGE\" - 20% off SSDs when buying 2 or more storage devices", 0.20);
+    }
+
     ////populates productsMap with data from products.csv
-    public void populateMapOfProducts()  {
+    private void populateMapOfProducts()  {
         try(BufferedReader br = new BufferedReader(new FileReader(PRODUCT_CSV_FILE))) {
           String line;
           while((line = br.readLine()) != null) {
@@ -78,6 +92,7 @@ public class OrderingSystemService {
         cart.put(indexedKeyOfMap.get(index), newQuantity);
     }
 
+    //// will throw an error if index is outOfBounds
     public void checkIfItemExists(int index)  {
         List<Product> indexedKeyOfMap = new ArrayList<>(cart.keySet());
         indexedKeyOfMap.get(index);
@@ -86,6 +101,10 @@ public class OrderingSystemService {
     public void deleteCartItem(int index) {
         List<Product> indexedKeyOfMap = new ArrayList<>(cart.keySet());
         cart.remove(indexedKeyOfMap.get(index));
+    }
+
+    public HashMap<String, Double> getVouchers() {
+        return this.vouchers;
     }
 
     ////testing purpose
