@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class CLInterface {
@@ -15,7 +14,7 @@ public class CLInterface {
 
     public void start() {
         int input = 0;
-        //loops so that it only prompts for another input when invalid instead of displaying start again
+        ////loops so that it only prompts for another input when invalid instead of displaying start again
         boolean loop = true;
         while (loop) {
            printStartUI();
@@ -143,27 +142,29 @@ public class CLInterface {
             return;
         }
         int total = printOrderSummary();
-
+        System.out.println("Vouchers: ");
+        StringBuilder str = new StringBuilder();
+        for(String voucher: systemService.getVouchers().keySet())
+            str.append(voucher + ", ");
+        System.out.println(str);
+        System.out.print("""
+                
+                - Type "b" to go back        - Type name of voucher to apply it        - Type "description" to view voucher details
+                Input:\s""");
+        String input = scanner.nextLine().trim().toLowerCase();
+        if(input.equals("b")) return;
+        else if(input.equals("description")) viewVouchers();
     }
 
     public void viewVouchers() {
-        StringBuilder str = new StringBuilder();
-        str.append("""
-                
-                %-25s && %s &&
-                """.formatted("", "VOUCHERS"));
-        for(String voucher: systemService.getVouchers().keySet()) {
-            str.append("""
-                    %s
-                    """.formatted(voucher));
-        }
+        printVouchers();
         while (true) {
             System.out.print("""
                     - Type "b" to go back
                     Input:\s""");
             if (scanner.nextLine().trim().equalsIgnoreCase("b")) return;
             else {
-                System.out.println("INVALID");
+                System.out.println("INVALID!\n");
             }
         }
     }
@@ -171,6 +172,22 @@ public class CLInterface {
     ////
     ///    PRIVATE METHODS SECTION FOR PRINTING AND FORMATTING
     ///
+
+    private void printVouchers() {
+        StringBuilder str = new StringBuilder();
+        str.append("""
+                
+                %-25s && %s &&
+                
+                """.formatted("", "VOUCHERS"));
+        HashMap<String, String> vouchers = systemService.getVouchers();
+        for(String voucher: vouchers.keySet()) {
+            str.append("""
+                    %-20s %s
+                    """.formatted(voucher,  vouchers.get(voucher)));
+        }
+        System.out.println(str);
+    }
 
     private void printProductInfo(Product product) {
         System.out.printf("""
@@ -187,7 +204,7 @@ public class CLInterface {
     }
 
     private void printCartItems() {
-        LinkedHashMap<Product, Integer> cart = systemService.getCart();
+        HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
         str.append("""
             
@@ -260,7 +277,7 @@ public class CLInterface {
     }
 
     private int printOrderSummary() {
-        LinkedHashMap<Product, Integer> cart = systemService.getCart();
+        HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
         str.append("""
                 
@@ -276,7 +293,7 @@ public class CLInterface {
                     %-39s %-12d ₱%d
                     """.formatted(product.getPRODUCT_NAME(), cart.get(product), product.getPRICE()));
         }
-        System.out.println(str.append("\nTOTAL: ₱" + total));
+        System.out.println(str.append("\nTOTAL: ₱" + total + "\n"));
         return total;
     }
 }

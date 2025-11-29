@@ -11,8 +11,8 @@ public class OrderingSystemService {
 ////    private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
 
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
-    private final HashMap<String, Double> vouchers = new HashMap<>();
-    private final LinkedHashMap<Product, Integer> cart = new LinkedHashMap<>();
+    private final HashMap<String, String> vouchers = new LinkedHashMap<>();
+    private final HashMap<Product, Integer> cart = new LinkedHashMap<>();
 
     public OrderingSystemService() {
         populateMapOfProducts();
@@ -20,11 +20,11 @@ public class OrderingSystemService {
     }
 
     private void populateMapOfVouchers() {
-        vouchers.put("\"BUNDLE10\" - 10% off when purchasing CPU + MOTHERBOARD + RAM together.", 0.10);
-        vouchers.put("\"BIGSPENDER\" - ₱1,000 off orders over ₱20,000", 1000.0);
-        vouchers.put("\"FULLBUILD15\" - 15% off when buying all 6 core components", 0.15);
-        vouchers.put("\"GAMEREADY\" - 12% off when buying GPU + Gaming Monitor", 0.12);
-        vouchers.put("\"DOUBLESTORAGE\" - 20% off SSDs when buying 2 or more storage devices", 0.20);
+        vouchers.put("\"BUNDLE10\"", "- 10% off when purchasing CPU + MOTHERBOARD + RAM together.");
+        vouchers.put("\"BIGSPENDER\"", "- ₱1,000 off orders over ₱20,000");
+        vouchers.put("\"FULLBUILD15\"", "- 15% off when buying all 6 core components");
+        vouchers.put("\"GAMEREADY\"", "- 12% off when buying GPU + Gaming Monitor");
+        vouchers.put("\"DOUBLESTORAGE\"", "- 20% off SSDs when buying 2 or more storage devices");
     }
 
     ////populates productsMap with data from products.csv
@@ -40,13 +40,14 @@ public class OrderingSystemService {
               if(!productsMap.containsKey(category)) {
                   ArrayList<Product> productList = new ArrayList<>();
                   productsMap.put(category, productList);
-                  //// split[0] = product name, split[2] = specifications, split[3] = review, split[4] = price
-                  productsMap.get(category).add(new Product(split[0], split[2], split[3], Integer.parseInt(split[4].trim())));
+                  //// split[0] = product name, split[2] = specifications, split[3] = review, split[4] = price, split[1] = category
+                  productsMap.get(category).add(new Product(split[0], split[2], split[3], Integer.parseInt(split[4].trim()), split[1]));
                   continue;
               }
-              productsMap.get(category).add(new Product(split[0], split[2], split[3], Integer.parseInt(split[4].trim())));
+              productsMap.get(category).add(new Product(split[0], split[2], split[3], Integer.parseInt(split[4].trim()), split[1]));
           }
         } catch (IOException e) {
+            System.out.println("ERROR in populateMapOfProducts()");
             throw new RuntimeException(e);
         }
     }
@@ -78,7 +79,7 @@ public class OrderingSystemService {
         }
     }
 
-    public LinkedHashMap<Product, Integer> getCart() {
+    public HashMap<Product, Integer> getCart() {
         return this.cart;
     }
 
@@ -103,8 +104,14 @@ public class OrderingSystemService {
         cart.remove(indexedKeyOfMap.get(index));
     }
 
-    public HashMap<String, Double> getVouchers() {
+    public HashMap<String, String> getVouchers() {
         return this.vouchers;
+    }
+
+    public void printApplicableVouchers() {
+        HashMap<Product, Integer> cart = this.cart;
+        boolean cpu, motherboard, ram = false;
+
     }
 
     ////testing purpose
