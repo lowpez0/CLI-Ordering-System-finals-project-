@@ -1,8 +1,6 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class OrderingSystemService {
 ////  pc path for products.csv
@@ -13,7 +11,7 @@ public class OrderingSystemService {
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
     private final HashMap<String, String> vouchers = new LinkedHashMap<>();
     private final HashMap<Product, Integer> cart = new LinkedHashMap<>();
-    private final List<HashMap<Product, Integer>> orderHistory = new ArrayList<>();
+    private final List<OrderHistory> orderHistoryList = new ArrayList<>();
 
     public OrderingSystemService() {
         populateMapOfProducts();
@@ -109,7 +107,7 @@ public class OrderingSystemService {
         return this.vouchers;
     }
 
-    ////returns 0 if not applicable voucher and 1 if wrong input
+    ////returns 0 if wrong input and -1 if voucher is not applicable
     public double applyVoucherIfApplicable(String voucher, double totalPrice) {
         return switch (voucher) {
             case "BUNDLE10" -> bundle10(totalPrice);
@@ -117,7 +115,7 @@ public class OrderingSystemService {
             case "FULLBUILD15" -> fullBuild15(totalPrice);
             case "GAMEREADY" -> gameReady(totalPrice);
             case "DOUBLESTORAGE" -> doubleStorage(totalPrice);
-            default -> 1;
+            default -> 0;
         };
     }
 
@@ -133,7 +131,7 @@ public class OrderingSystemService {
                 storageCount += this.cart.get(product);
             }
         }
-        return storageCount >= 2 ? totalPrice - 200: 0;
+        return storageCount >= 2 ? totalPrice - 200: -1;
     }
 
     ///returns 12% off totalPrice if bought gpu and monitor
@@ -145,7 +143,7 @@ public class OrderingSystemService {
                 case "monitors" -> monitor = true;
             }
         }
-        return gpu && monitor ? totalPrice - (totalPrice * 0.12): 0;
+        return gpu && monitor ? totalPrice - (totalPrice * 0.12): -1;
     }
 
     ///returns 15% off totalPrice if bought 6 core components
@@ -162,12 +160,12 @@ public class OrderingSystemService {
             }
         }
         return cpu && motherboard && memory && storage && psu && pcCase ?
-                totalPrice - (totalPrice * 0.15): 0;
+                totalPrice - (totalPrice * 0.15): -1;
     }
 
     ///return 1000 pesos off totalPrice if totalPrice is over 20000
     private double bigSPENDER(double totalPrice) {
-        return totalPrice > 20000 ? totalPrice - 1000: 0;
+        return totalPrice > 20000 ? totalPrice - 1000: -1;
     }
 
     ///return 10% off totalPrice if bought cpu, motherboard, and memory
@@ -180,7 +178,7 @@ public class OrderingSystemService {
                 case "memory" -> memory = true;
             }
         }
-        return cpu && motherboard && memory ? totalPrice - (totalPrice * 0.10): 0;
+        return cpu && motherboard && memory ? totalPrice - (totalPrice * 0.10): -1;
     }
 
     ///================================================================
@@ -197,11 +195,13 @@ public class OrderingSystemService {
         this.cart.clear();
     }
 
-    public void addOrderToHistory(HashMap<Product, Integer> order) {
-        this.orderHistory.add(order);
+    public void addOrderToHistory(HashMap<Product, Integer> order, double total) {
+        //shallow copy of order, so that when we clear cart, it does not delete field items in OrderHistory.java
+        HashMap<Product, Integer> orderCopy = new HashMap<>(order);
+        this.orderHistoryList.add(new OrderHistory(total, orderCopy));
     }
 
-    public List<HashMap<Product, Integer>> getOrderHistory() {
-        return orderHistory;
+    public List<OrderHistory> getOrderHistory() {
+        return this.orderHistoryList;
     }
 }

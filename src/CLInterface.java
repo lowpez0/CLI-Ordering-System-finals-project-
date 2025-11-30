@@ -1,5 +1,7 @@
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class CLInterface {
@@ -25,23 +27,13 @@ public class CLInterface {
                 continue;
             }
             switch (input) {
-                case 1:
-                    viewCategories();
-                    break;
-                case 2:
-                    viewVouchers();
-                    break;
-                case 4:
-                    viewCartItems();
-                    break;
-                case 5:
-                    viewCheckout();
-                    break;
-                case 6:
-                    loop = false;
-                    break;
-                default:
-                    System.out.println("INVALID");
+                case 1 -> viewCategories();
+                case 2 -> viewVouchers();
+                case 3 -> viewOrderHistory();
+                case 4 -> viewCartItems();
+                case 5 -> viewCheckout();
+                case 6 -> loop = false;
+                default -> System.out.println("INVALID");
             }
         }
         System.out.println("END PROGRAM!");
@@ -123,7 +115,7 @@ public class CLInterface {
 
     private void viewCartItems() {
         if(systemService.getCart().isEmpty()){
-            System.out.println("THERE IS NO ITEMS IN CART!!!");
+            System.out.println("NO ITEMS IN CART!");
             return;
         }
         while (true) {
@@ -161,16 +153,18 @@ public class CLInterface {
             System.out.println("NO ITEM FOUND IN CART!");
             return;
         }
-        double originalPrice = printOrderSummary();
+        double total = printOrderSummary();
         displayAvailableVouchers();
-        processCheckoutInput(originalPrice);
-        systemService.addOrderToHistory(systemService.getCart());
+        total = processCheckoutInput(total);
+        if(total == -1) return;
+        systemService.addOrderToHistory(systemService.getCart(), total);
         systemService.clearCart();
     }
 
 
-    private void processCheckoutInput(double originalPrice) {
-        double appliedVoucherPrice = 0;
+    private double processCheckoutInput(double originalPrice) {
+        /// appliedVoucherPrice can be 0 if user enters wrong input and -1 if voucher picked is not applicable
+        double appliedVoucherPrice = -1;
         StringBuilder voucherName = new StringBuilder();
         while (true) {
             System.out.print("""
@@ -180,7 +174,7 @@ public class CLInterface {
             String input = scanner.nextLine().trim().toLowerCase();
             switch (input) {
                 case "b" -> {
-                    return;
+                    return -1;
                 }
                 case "description" -> {
                     viewVouchers();
@@ -188,14 +182,15 @@ public class CLInterface {
                 }
                 case "pay" -> {
                     confirmOrder(originalPrice, appliedVoucherPrice, voucherName);
-                    return;
+                    /// if voucher is applied return discounted total, if just not return the originalPrice
+                    return !(appliedVoucherPrice == -1 || appliedVoucherPrice == 0) ? appliedVoucherPrice: originalPrice;
                 }
             }
             appliedVoucherPrice = systemService.applyVoucherIfApplicable(input.toUpperCase(), originalPrice);
-            if (appliedVoucherPrice == 1) {
+            if (appliedVoucherPrice == 0) {
                 System.out.println("INVALID!\n");
                 continue;
-            } else if (appliedVoucherPrice == 0) {
+            } else if (appliedVoucherPrice == -1) {
                 System.out.println("VOUCHER IS NOT APPLICABLE!\n");
                 continue;
             }
@@ -214,7 +209,7 @@ public class CLInterface {
 
     private void confirmOrder(double originalPrice, double appliedVoucherPrice, StringBuilder voucher) {
         double total = 0;
-        if(!(appliedVoucherPrice == 0 || appliedVoucherPrice == 1))
+        if(!(appliedVoucherPrice == 0 || appliedVoucherPrice == -1))
             total += appliedVoucherPrice;
         else total = originalPrice;
         System.out.printf("""
@@ -223,12 +218,7 @@ public class CLInterface {
                 Total: ₱%.2f
                 Used voucher: %s
                 
-                - Type "y" to confirm order
-                Input:\s""", total, voucher.isEmpty() ? "NO VOUCHER APPLIED" : voucher.toString());
-        if (!scanner.nextLine().trim().equalsIgnoreCase("y")) {
-            System.out.println("INVALID!");
-            return;
-        }
+                """, total, voucher.isEmpty() ? "NO VOUCHER APPLIED" : voucher.toString());
         System.out.println("✅ Order confirmed! Your items will be delivered.");
         simulateOrderArriving();
         System.out.println("✅ Your order have been delivered.");
@@ -236,6 +226,7 @@ public class CLInterface {
     }
 
     private void printReceipt(double originalPrice, double appliedVoucherPrice, StringBuilder voucher) {
+        appliedVoucherPrice = !(appliedVoucherPrice == -1 || appliedVoucherPrice == 0) ? appliedVoucherPrice: originalPrice;
         HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
         str.append("""
@@ -278,7 +269,7 @@ public class CLInterface {
     private void simulateOrderArriving() {
         try {
             System.out.print("Order arriving");
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 Thread.sleep(1000);
                 System.out.print(". ");
             }
@@ -301,9 +292,62 @@ public class CLInterface {
         }
     }
 
+    private void viewOrderHistory() {
+        if(systemService.getOrderHistory().isEmpty()) {
+            System.out.println("EMPTY HISTORY!");
+            return;
+        }
+        printOrderHistory();
+
+    }
+
     ///
     ///    PRIVATE METHODS SECTION FOR PRINTING AND FORMATTING
     ///
+
+    private void printOrderHistory() {
+        List<OrderHistory> historyList = systemService.getOrderHistory();
+        /// format LocalDateTime so that it looks like this - Nov 30, 2025 - 3:42 PM
+        DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("MMM dd, yyyy - h:mm a");
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n============================ ORDER HISTORY ============================\n\n");
+
+        for (int i = 0; i < historyList.size(); i++) {
+            OrderHistory order = historyList.get(i);
+            String formattedDate = order.getDate().format(dtFormat);
+            sb.append(
+                    """
+                    ORDER #%d
+                    Date: %s
+                    Total: ₱%.2f
+                    Status: %s
+                    Items:
+                    """.formatted(
+                            (i + 1),
+                            formattedDate,
+                            order.getTotal(),
+                            order.getSTATUS()
+                    )
+            );
+
+            int count = 0;
+            for (Product product : order.getItems().keySet()) {
+                String itemText = "%s (%d),    ".formatted(
+                        product.getPRODUCT_NAME(),
+                        order.getItems().get(product)
+                );
+                sb.append(itemText);
+                count++;
+                // After printing 3 items, break line
+                if (count % 3 == 0) {
+                    sb.append("\n");
+                }
+            }
+            sb.append("\n-----------------------------------------------------------------------\n");
+        }
+
+        System.out.println(sb);
+    }
 
 
     private void printVouchers() {

@@ -8,10 +8,9 @@ public class OrderHistory {
     private LocalDateTime date;
     private HashMap<Product, Integer> items;
 
-    public OrderHistory(String STATUS, double total, LocalDateTime date, HashMap<Product, Integer> items) {
-        this.STATUS = STATUS;
+    public OrderHistory(double total, HashMap<Product, Integer> items) {
         this.total = total;
-        this.date = date;
+        this.date = LocalDateTime.now();
         this.items = items;
     }
 
