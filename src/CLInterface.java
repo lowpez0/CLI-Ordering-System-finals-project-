@@ -114,7 +114,7 @@ public class CLInterface {
     }
 
     private void viewCartItems() {
-        if(systemService.getCart().isEmpty()){
+        if (systemService.getCart().isEmpty()) {
             System.out.println("NO ITEMS IN CART!");
             return;
         }
@@ -156,7 +156,7 @@ public class CLInterface {
         double total = printOrderSummary();
         displayAvailableVouchers();
         total = processCheckoutInput(total);
-        if(total == -1) return;
+        if (total == -1) return;
         systemService.addOrderToHistory(systemService.getCart(), total);
         systemService.clearCart();
     }
@@ -168,9 +168,9 @@ public class CLInterface {
         StringBuilder voucherName = new StringBuilder();
         while (true) {
             System.out.print("""
-                
-                - Type "b" to go back        -Type "pay" to checkout        - Type name of voucher to apply it        - Type "description" to view voucher details
-                Input:\s""");
+                    
+                    - Type "b" to go back        -Type "pay" to checkout        - Type name of voucher to apply it        - Type "description" to view voucher details
+                    Input:\s""");
             String input = scanner.nextLine().trim().toLowerCase();
             switch (input) {
                 case "b" -> {
@@ -183,7 +183,7 @@ public class CLInterface {
                 case "pay" -> {
                     confirmOrder(originalPrice, appliedVoucherPrice, voucherName);
                     /// if voucher is applied return discounted total, if just not return the originalPrice
-                    return !(appliedVoucherPrice == -1 || appliedVoucherPrice == 0) ? appliedVoucherPrice: originalPrice;
+                    return !(appliedVoucherPrice == -1 || appliedVoucherPrice == 0) ? appliedVoucherPrice : originalPrice;
                 }
             }
             appliedVoucherPrice = systemService.applyVoucherIfApplicable(input.toUpperCase(), originalPrice);
@@ -209,7 +209,7 @@ public class CLInterface {
 
     private void confirmOrder(double originalPrice, double appliedVoucherPrice, StringBuilder voucher) {
         double total = 0;
-        if(!(appliedVoucherPrice == 0 || appliedVoucherPrice == -1))
+        if (!(appliedVoucherPrice == 0 || appliedVoucherPrice == -1))
             total += appliedVoucherPrice;
         else total = originalPrice;
         System.out.printf("""
@@ -223,46 +223,6 @@ public class CLInterface {
         simulateOrderArriving();
         System.out.println("✅ Your order have been delivered.");
         printReceipt(originalPrice, appliedVoucherPrice, voucher);
-    }
-
-    private void printReceipt(double originalPrice, double appliedVoucherPrice, StringBuilder voucher) {
-        appliedVoucherPrice = !(appliedVoucherPrice == -1 || appliedVoucherPrice == 0) ? appliedVoucherPrice: originalPrice;
-        HashMap<Product, Integer> cart = systemService.getCart();
-        StringBuilder str = new StringBuilder();
-        str.append("""
-                                             
-                                             
-                                             BuildMyPc
-                                         Telp. 09165595489
-                                         
-                                         
-                *****************************************************************
-                                     C A S H   R E C E I P T                
-                *****************************************************************
-                
-                   Description                           Q T Y        P R I C E            
-                """);
-        for(Product product: cart.keySet()) {
-            int qty = cart.get(product);
-            str.append("""
-                       %-38s %-12d ₱%d
-                    """.formatted(product.getPRODUCT_NAME(), qty, (product.getPRICE() * qty)));
-        }
-        str.append("""
-                
-                *****************************************************************
-                   Original Price: %-33s ₱%.2f
-                   Voucher used: %-34s- ₱%.2f
-                -----------------------------------------------------------------
-                   Total Paid: %-37s ₱%.2f
-                
-                *****************************************************************
-                
-                                       T H A N K  Y O U !
-                """.formatted("", originalPrice,
-                "\"" + voucher + "\"", (originalPrice - appliedVoucherPrice),
-                "", appliedVoucherPrice));
-        System.out.println(str);
     }
 
     // waits for 2 seconds, simulating order arriving
@@ -293,7 +253,7 @@ public class CLInterface {
     }
 
     private void viewOrderHistory() {
-        if(systemService.getOrderHistory().isEmpty()) {
+        if (systemService.getOrderHistory().isEmpty()) {
             System.out.println("EMPTY HISTORY!");
             return;
         }
@@ -301,50 +261,40 @@ public class CLInterface {
 
     }
 
-    ///
-    ///    PRIVATE METHODS SECTION FOR PRINTING AND FORMATTING
-    ///
+    // ======================== PRINT METHODS WITH BORDERS ======================== //
 
     private void printOrderHistory() {
         List<OrderHistory> historyList = systemService.getOrderHistory();
-        /// format LocalDateTime so that it looks like this - Nov 30, 2025 - 3:42 PM
         DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("MMM dd, yyyy - h:mm a");
+
         StringBuilder sb = new StringBuilder();
-        sb.append("\n============================ ORDER HISTORY ============================\n\n");
+        sb.append("\n┌─────────────────────────────📜 ORDER HISTORY 📜──────────────────────────────┐\n\n");
 
         for (int i = 0; i < historyList.size(); i++) {
             OrderHistory order = historyList.get(i);
             String formattedDate = order.getDate().format(dtFormat);
-            sb.append(
-                    """
-                    ORDER #%d
-                    Date: %s
-                    Total: ₱%.2f
-                    Status: %s
-                    Items:
-                    """.formatted(
-                            (i + 1),
-                            formattedDate,
-                            order.getTotal(),
-                            order.getSTATUS()
-                    )
-            );
+
+            sb.append("│ 🛒 ORDER #" + (i + 1) + "\n");
+            sb.append("│ 📅 Date: " + formattedDate + "\n");
+            sb.append("│ 💰 Total: ₱" + String.format("%.2f", order.getTotal()) + "\n");
+            sb.append("│ 📌 Status: " + order.getSTATUS() + "\n");
+            sb.append("│ 🧾 Items:\n│ ");
 
             int count = 0;
             for (Product product : order.getItems().keySet()) {
-                String itemText = "%s (%d),    ".formatted(
+                sb.append("%s (%d)    ".formatted(
                         product.getPRODUCT_NAME(),
                         order.getItems().get(product)
-                );
-                sb.append(itemText);
+                ));
                 count++;
-                // After printing 3 items, break line
-                if (count % 3 == 0) {
-                    sb.append("\n");
-                }
+
+                if (count % 3 == 0) sb.append("\n│ ");
             }
-            sb.append("\n-----------------------------------------------------------------------\n");
+
+            sb.append("\n├──────────────────────────────────────────────────────────────────────────────┤\n");
         }
+
+        sb.append("└──────────────────────────────────────────────────────────────────────────────┘\n");
 
         System.out.println(sb);
     }
@@ -352,127 +302,174 @@ public class CLInterface {
 
     private void printVouchers() {
         StringBuilder str = new StringBuilder();
-        str.append("""
-                
-                %-25s && %s &&
-                
-                """.formatted("", "VOUCHERS"));
+        str.append("\n┌───────────────────────────────────────────────────────🎟️ VOUCHERS 🎟️───────────────────────────────────────────────┐\n");
         HashMap<String, String> vouchers = systemService.getVouchers();
         for (String voucher : vouchers.keySet()) {
-            str.append("""
-                    %-20s %s
-                    """.formatted("\"" + voucher + "\"", vouchers.get(voucher)));
+            str.append("│ 💳 %-20s %s\n".formatted("\"" + voucher + "\"", vouchers.get(voucher)));
         }
+        str.append("└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘\n");
         System.out.println(str);
     }
+
 
     private void printProductInfo(Product product) {
         System.out.printf("""
                         
-                        %-30s %s
-                        %-29s %s
-                        %-29s %s
-                        %-30s %s
-                        %n""",
+                        ┌──────────────────────────────📦 PRODUCT INFO ─────────────────────────────────────────┐
+                        │ %-23s %s
+                        │ %-22s %s
+                        │ %-22s %s
+                        │ %-23s %s
+                        └──────────────────────────────────────────────────────────────────────────────────────┘
+                        
+                        """,
                 "Product Name:", product.getPRODUCT_NAME(),
                 "Review:", product.getREVIEW(),
                 "Specifications:", product.getSPECIFICATIONS(),
-                "Price:", "₱" + product.getPRICE());
+                "Price:", "₱" + product.getPRICE()
+        );
     }
+
 
     private void printCartItems() {
         HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
-        str.append("""
-                
-                %-25s && %s &&
-                
-                     %-44s %s
-                """.formatted("", "CART",
-                "CART ITEMS", " QUANTITY"));
+
+        str.append("\n┌─────────────────────────────🛒 CART 🛒────────────────────────────┐\n");
+        str.append("│ %-44s %s\n".formatted("🧾 CART ITEMS", "📦 QTY"));
+
         int i = 0;
         for (Product product : cart.keySet()) {
-            str.append("""
-                    %-53s %d
-                    %s
-                    
-                    """.formatted((i + 1) + ". " + product.getPRODUCT_NAME(), cart.get(product),
-                    "₱" + product.getPRICE() + "\t" + product.getREVIEW().trim()));
+            str.append("│ %-47s %d\n".formatted(
+                    (i + 1) + ". " + product.getPRODUCT_NAME() + "\t💵 ₱" + product.getPRICE(),
+                    cart.get(product)
+            ));
+            str.append("│ ⭐ " + product.getREVIEW().trim() + "\n");
             i++;
         }
+
+        str.append("└───────────────────────────────────────────────────────────────────┘\n");
+
         System.out.println(str);
     }
+
 
     private void printCategories() {
         System.out.println("""
                 
-                                                    CATEGORIES
-                
-                . CPU                  . GRAPHIC CARDS      . MEMORY              . KEYBOARDS
-                . MOTHERBOARDS         . STORAGE            . POWER SUPPLIES      . MOUSE
-                . CASES                . COOLERS            . MONITORS            . AUDIO
+                ┌──────────────────────────────────🗂️ CATEGORIES 🗂️──────────────────────────────────────┐
+                │ 🔹  CPU                  🔹  GRAPHIC CARDS      🔹  MEMORY              🔹 KEYBOARDS
+                │ 🔹  MOTHERBOARDS         🔹  STORAGE            🔹  POWER SUPPLIES      🔹 MOUSE
+                │ 🔹  CASES                🔹  COOLERS            🔹️  MONITORS            🔹 AUDIO
+                └─────────────────────────────────────────────────────────────────────────────────────────┘
                 """);
+
         System.out.print("""
                 - Type "b" to go back        - Type category to view items
                 """);
     }
 
+
     private void printStartUI() {
         System.out.println("""
                 
-                BuildMyPc
-                
-                1.View Items
-                2.Vouchers
-                3.Order History
-                4.View Cart
-                5.Checkout
-                6.Exit
+                ┌──────🖥️ BuildMyPc ─────────┐
+                │
+                │ 1. View Items
+                │ 2. Vouchers
+                │ 3. Order History
+                │ 4. View Cart
+                │ 5. Checkout
+                │ 6. Exit
+                └─────────────────────────────┘
                 """);
         System.out.print("""
-                -Type number to navigate
-                Input:\s""");
+                - Type number to navigate
+                Input: """);
     }
 
-    /// /method helper for viewItems() method
-    /// formats the string so that product name and price aligns okay
+
     private void printItems(String category, ArrayList<Product> productList) {
         StringBuilder str = new StringBuilder();
+
         str.append("""
                 
-                %-25s && %s &&
-                
-                %-7s %-36s %s
-                """.formatted("", category.toUpperCase(), "", "PRODUCT NAME", "PRICE"));
+                ┌──────────────────────📦 %s─────────────────────┐
+                │ %-36s %s
+                """.formatted(category.toUpperCase(), "PRODUCT NAME", "PRICE"));
+
         for (int i = 0; i < productList.size(); i++) {
             Product product = productList.get(i);
-            str.append("""
-                    %-7s %-36s ₱%d
-                    """.formatted(i + 1 + ".", product.getPRODUCT_NAME(), product.getPRICE()));
+            str.append("│ %-36s ₱%d\n".formatted((i + 1) + ". " + product.getPRODUCT_NAME(), product.getPRICE()));
         }
+
+        str.append("└─────────────────────────────────────────────────┘\n");
+
         System.out.println(str);
     }
+
 
     private double printOrderSummary() {
         HashMap<Product, Integer> cart = systemService.getCart();
         StringBuilder str = new StringBuilder();
+
         str.append("""
                 
-                %-20s && %s &&
-                
-                     %-31s %-15s %s
-                """.formatted("", "ORDER SUMMARY",
-                "ITEMS", "QUANTITY", "PRICE"));
+                ┌────────────────────────────────📦 ORDER SUMMARY─────────────────────────────┐
+                │ %-31s %-15s %s
+                """.formatted("ITEMS", "QUANTITY", "PRICE"));
+
         double total = 0;
+
         for (Product product : cart.keySet()) {
-            total += (product.getPRICE() * cart.get(product));
-            str.append("""
-                    %-39s %-12d ₱%d
-                    """.formatted(product.getPRODUCT_NAME(), cart.get(product), product.getPRICE()));
+            total += product.getPRICE() * cart.get(product);
+            str.append("│ %-35s %-12d ₱%d\n".formatted(
+                    product.getPRODUCT_NAME(),
+                    cart.get(product),
+                    product.getPRICE()
+            ));
         }
-        System.out.println(str.append("\nTOTAL: ₱" + total + "\n"));
+
+        str.append("├──────────────────────────────────────────────────────────────────────────────┤\n");
+        str.append("│ 💰 TOTAL: ₱" + total + "\n");
+        str.append("└──────────────────────────────────────────────────────────────────────────────┘\n");
+
+        System.out.println(str);
+
         return total;
     }
-}
 
-//fix bug cart not clearing after checkout
+
+
+    ///
+    ///    PRIVATE METHODS SECTION FOR PRINTING AND FORMATTING
+    ///
+    private void printReceipt(double originalPrice, double appliedVoucherPrice, StringBuilder voucher) {
+        appliedVoucherPrice = !(appliedVoucherPrice == -1 || appliedVoucherPrice == 0) ? appliedVoucherPrice : originalPrice;
+        HashMap<Product, Integer> cart = systemService.getCart();
+        StringBuilder str = new StringBuilder();
+
+        str.append("\n┌────────────────────────────── BuildMyPc ───────────────────────────────┐\n");
+        str.append("│                          Telp. 09165595489                             \n");
+        str.append("├────────────────────────────────────────────────────────────────────────┤\n");
+        str.append("│                          C A S H   R E C E I P T                       \n");
+        str.append("├────────────────────────────────────────────────────────────────────────┤\n");
+        str.append("│ Description                        QTY        PRICE                    │\n");
+
+        for (Product product : cart.keySet()) {
+            int qty = cart.get(product);
+            str.append("│ %-35s %-10d₱%-8d \n".formatted(product.getPRODUCT_NAME(), qty, (product.getPRICE() * qty)));
+        }
+
+        str.append("├────────────────────────────────────────────────────────────────────────┤\n");
+        str.append("│ Original Price:                               ₱%-10.2f \n".formatted(originalPrice));
+        str.append("│ Voucher used: %-20s             - ₱%-8.2f            \n".formatted("\"" + voucher + "\"", (originalPrice - appliedVoucherPrice)));
+        str.append("│ Total Paid:                                   ₱%-10.2f \n".formatted(appliedVoucherPrice));
+        str.append("├────────────────────────────────────────────────────────────────────────┤\n");
+        str.append("│                           T H A N K  Y O U ! 🙌                        \n");
+        str.append("└────────────────────────────────────────────────────────────────────────┘\n");
+
+        System.out.println(str);
+    }
+
+}

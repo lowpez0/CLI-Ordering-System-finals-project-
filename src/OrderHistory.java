@@ -3,10 +3,10 @@ import java.util.HashMap;
 
 public class OrderHistory {
 
-    private String STATUS = "DELIVERED";
-    private double total;
-    private LocalDateTime date;
-    private HashMap<Product, Integer> items;
+    private final String STATUS = "DELIVERED";
+    private final double total;
+    private final LocalDateTime date;
+    private final HashMap<Product, Integer> items;
 
     public OrderHistory(double total, HashMap<Product, Integer> items) {
         this.total = total;
