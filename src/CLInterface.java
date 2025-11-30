@@ -164,7 +164,10 @@ public class CLInterface {
         double originalPrice = printOrderSummary();
         displayAvailableVouchers();
         processCheckoutInput(originalPrice);
+        systemService.addOrderToHistory(systemService.getCart());
+        systemService.clearCart();
     }
+
 
     private void processCheckoutInput(double originalPrice) {
         double appliedVoucherPrice = 0;
@@ -271,14 +274,15 @@ public class CLInterface {
         System.out.println(str);
     }
 
+    // waits for 2 seconds, simulating order arriving
     private void simulateOrderArriving() {
         try {
-            System.out.print("Loading");
+            System.out.print("Order arriving");
             for (int i = 0; i < 2; i++) {
-                Thread.sleep(1000); // Sleep for 2 seconds
+                Thread.sleep(1000);
                 System.out.print(". ");
             }
-            System.out.println(); // New line after completion
+            System.out.println();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

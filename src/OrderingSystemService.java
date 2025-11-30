@@ -13,6 +13,7 @@ public class OrderingSystemService {
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
     private final HashMap<String, String> vouchers = new LinkedHashMap<>();
     private final HashMap<Product, Integer> cart = new LinkedHashMap<>();
+    private final List<HashMap<Product, Integer>> orderHistory = new ArrayList<>();
 
     public OrderingSystemService() {
         populateMapOfProducts();
@@ -192,4 +193,15 @@ public class OrderingSystemService {
         }
     }
 
+    public void clearCart() {
+        this.cart.clear();
+    }
+
+    public void addOrderToHistory(HashMap<Product, Integer> order) {
+        this.orderHistory.add(order);
+    }
+
+    public List<HashMap<Product, Integer>> getOrderHistory() {
+        return orderHistory;
+    }
 }
