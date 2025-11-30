@@ -173,7 +173,6 @@ public class OrderingSystemService {
     private double bundle10(double totalPrice) {
         boolean cpu = false, motherboard = false, memory = false;
         for(Product product: this.cart.keySet()) {
-            System.out.println(product.getCATEGORY());
             switch (product.getCATEGORY()) {
                 case "cpu" -> cpu = true;
                 case "motherboards" -> motherboard = true;

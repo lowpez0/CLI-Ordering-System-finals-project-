@@ -24,7 +24,6 @@ public class CLInterface {
                 System.out.println("INVALID!\n");
                 continue;
             }
-
             switch (input) {
                 case 1:
                     viewCategories();
@@ -123,6 +122,10 @@ public class CLInterface {
     }
 
     private void viewCartItems() {
+        if(systemService.getCart().isEmpty()){
+            System.out.println("THERE IS NO ITEMS IN CART!!!");
+            return;
+        }
         while (true) {
             printCartItems();
             System.out.print("""
@@ -165,7 +168,7 @@ public class CLInterface {
 
     private void processCheckoutInput(double originalPrice) {
         double appliedVoucherPrice = 0;
-        StringBuilder voucher = new StringBuilder();
+        StringBuilder voucherName = new StringBuilder();
         while (true) {
             System.out.print("""
                 
@@ -181,7 +184,7 @@ public class CLInterface {
                     continue;
                 }
                 case "pay" -> {
-                    confirmOrder(originalPrice, appliedVoucherPrice, voucher);
+                    confirmOrder(originalPrice, appliedVoucherPrice, voucherName);
                     return;
                 }
             }
@@ -193,7 +196,7 @@ public class CLInterface {
                 System.out.println("VOUCHER IS NOT APPLICABLE!\n");
                 continue;
             }
-            voucher.append(input.toUpperCase());
+            voucherName.append(input.toUpperCase());
             System.out.println("VOUCHER APPLIED!");
         }
     }
@@ -217,9 +220,12 @@ public class CLInterface {
                 Total: ₱%.2f
                 Used voucher: %s
                 
-                Confirm order? "y"\s
-                Input:\s""", total, voucher);
-        if (!scanner.nextLine().trim().equalsIgnoreCase("y")) return;
+                - Type "y" to confirm order
+                Input:\s""", total, voucher.isEmpty() ? "NO VOUCHER APPLIED" : voucher.toString());
+        if (!scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            System.out.println("INVALID!");
+            return;
+        }
         System.out.println("✅ Order confirmed! Your items will be delivered.");
         simulateOrderArriving();
         System.out.println("✅ Your order have been delivered.");
@@ -268,7 +274,7 @@ public class CLInterface {
     private void simulateOrderArriving() {
         try {
             System.out.print("Loading");
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 2; i++) {
                 Thread.sleep(1000); // Sleep for 2 seconds
                 System.out.print(". ");
             }
@@ -421,5 +427,4 @@ public class CLInterface {
     }
 }
 
-fix bug cart not clearing after checkout
-fix bug can apply multiple vouchers
+//fix bug cart not clearing after checkout
