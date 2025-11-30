@@ -200,7 +200,7 @@ public class CLInterface {
     }
 
     private void displayAvailableVouchers() {
-        System.out.println("Vouchers: ");
+        System.out.println("🎟️Vouchers🎟️ ");
         StringBuilder str = new StringBuilder();
         for (String voucher : systemService.getVouchers().keySet())
             str.append("\"" + voucher + "\"" + ", ");
@@ -388,7 +388,6 @@ public class CLInterface {
                 Input: """);
     }
 
-
     private void printItems(String category, ArrayList<Product> productList) {
         StringBuilder str = new StringBuilder();
 
@@ -429,13 +428,11 @@ public class CLInterface {
                     product.getPRICE()
             ));
         }
-
         str.append("├──────────────────────────────────────────────────────────────────────────────┤\n");
         str.append("│ 💰 TOTAL: ₱" + total + "\n");
         str.append("└──────────────────────────────────────────────────────────────────────────────┘\n");
 
         System.out.println(str);
-
         return total;
     }
 
@@ -468,7 +465,6 @@ public class CLInterface {
         str.append("├────────────────────────────────────────────────────────────────────────┤\n");
         str.append("│                           T H A N K  Y O U ! 🙌                        \n");
         str.append("└────────────────────────────────────────────────────────────────────────┘\n");
-
         System.out.println(str);
     }
 
