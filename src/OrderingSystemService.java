@@ -2,11 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public class OrderingSystemService {
-////  pc path for products.csv
-  private final String PRODUCT_CSV_FILE = "C:\\Users\\sadsc\\IdeaProjects\\CLI-Ordering-System-finals-project-\\src\\products.csv";
-////  laptop path for products.csv
-////    private final String PRODUCT_CSV_FILE = "C:\\Users\\dhan\\IdeaProjects\\CLI Ordering System\\src\\products.csv";
 
+    private final String PRODUCT_CSV_FILE = "src/products.csv";
     private final HashMap<String, ArrayList<Product>> productsMap = new HashMap<>();
     private final HashMap<String, String> vouchers = new LinkedHashMap<>();
     private final HashMap<Product, Integer> cart = new LinkedHashMap<>();
@@ -195,7 +192,7 @@ public class OrderingSystemService {
     }
 
     public void addOrderToHistory(HashMap<Product, Integer> order, double total) {
-        //shallow copy of order, so that when we clear cart, it does not delete field items in OrderHistory.java
+        ///shallow copy of order, so that when we clear cart, it does not delete field items in OrderHistory.java
         HashMap<Product, Integer> orderCopy = new HashMap<>(order);
         this.orderHistoryList.add(new OrderHistory(total, orderCopy));
     }
